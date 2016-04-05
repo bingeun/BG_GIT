@@ -1,22 +1,5 @@
-*.exe
-*.dll
-*.com
-*.so
-*.o
-*.class
-
-*.7z
-*.zip
-*.alz
-*.rar
-
 *.sdf
-*.log
-*.sql
-*.sqlite
-
-.DS_Store*
-ehthumbs.db
+*.opensdf
 Thumbs.db
 
 _Debug_
