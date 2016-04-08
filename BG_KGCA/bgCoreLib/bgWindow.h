@@ -1,17 +1,19 @@
 #pragma once
 #include "bgStd.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
-
 class bgWindow
 {
 public:
-	HWND m_hWnd;
-	RECT m_rtWindow;
-	RECT m_rtClient;
+	HINSTANCE	m_hInstance;
+	HWND		m_hWnd;
+	RECT		m_rtWindow;
+	RECT		m_rtClient;
+	int			m_iWidth;
+	int			m_iHeight;
 
 public:
-	bool SetWindow(HINSTANCE hInstance);
+	void	SetRect(int iWidth, int iHeight);
+	bool	SetWindow(HINSTANCE hInstance, TCHAR* titleName = L"BG Project", int iX = 0, int iY = 0, int iWidth = 800, int iHeight = 600);
 
 public:
 	bgWindow();

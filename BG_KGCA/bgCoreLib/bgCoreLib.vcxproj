@@ -92,6 +92,9 @@
       <Command>copy "*.h" "..\\..\\include\\"
 copy "..\\..\\output\\bgCoreLib\\bgCoreLib.lib" "..\\..\\lib\\bgCoreLib.lib"</Command>
     </PostBuildEvent>
+    <Lib>
+      <AdditionalDependencies>winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -148,15 +151,20 @@ copy "..\\..\\output\\bgCoreLib\\bgCoreLib.lib" "..\\..\\lib\\bgCoreLib.lib"</Co
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bgBase.h" />
+    <ClInclude Include="bgBitmap.h" />
     <ClInclude Include="bgCore.h" />
+    <ClInclude Include="bgInput.h" />
     <ClInclude Include="bgSample.h" />
     <ClInclude Include="bgStd.h" />
+    <ClInclude Include="bgSys.h" />
     <ClInclude Include="bgTimer.h" />
     <ClInclude Include="bgWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bgBase.cpp" />
+    <ClCompile Include="bgBitmap.cpp" />
     <ClCompile Include="bgCore.cpp" />
+    <ClCompile Include="bgInput.cpp" />
     <ClCompile Include="bgSample.cpp" />
     <ClCompile Include="bgTimer.cpp" />
     <ClCompile Include="bgWindow.cpp" />

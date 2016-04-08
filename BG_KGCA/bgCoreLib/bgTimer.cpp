@@ -4,22 +4,41 @@
 
 bool bgTimer::Init()
 {
-	return false;
+	m_fSecondPerFrame = 0.0f;
+	m_iFPS = 0;
+	m_dwBeforeTick = timeGetTime();
+	m_fAccumulation = 0.0f;
+	return true;
 }
 
 bool bgTimer::Frame()
 {
-	return false;
+	DWORD dwCurrentTick = timeGetTime();
+	DWORD dwElapseTick = dwCurrentTick - m_dwBeforeTick;
+	m_fSecondPerFrame = dwElapseTick / 1000.0f;
+	m_fAccumulation += m_fSecondPerFrame;
+	m_fFrameTime += m_fFrameTime;
+
+	if (m_fFrameTime >= 1.0f)
+	{
+		m_iFPS = m_dwFrameCounter;
+		m_fFrameTime -= 1.0f;
+		m_dwFrameCounter = 0;
+	}
+	m_dwFrameCounter++;
+	m_dwBeforeTick = dwCurrentTick;
+	return true;
 }
 
 bool bgTimer::Render()
 {
-	return false;
+	static float;
+	return true;
 }
 
 bool bgTimer::Release()
 {
-	return false;
+	return true;
 }
 
 bgTimer::bgTimer()

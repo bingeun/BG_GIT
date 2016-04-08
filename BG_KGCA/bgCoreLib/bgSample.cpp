@@ -4,22 +4,28 @@
 
 bool bgSample::Init()
 {
-	return false;
+	return true;
 }
 
 bool bgSample::Frame()
 {
-	return false;
+	return true;
 }
 
 bool bgSample::Render()
 {
-	return false;
+	m_Timer.Render();
+	HDC hdc = GetDC(this->m_hWnd);
+	SetBkMode(hdc, TRANSPARENT);
+	TextOut(hdc, 0, 0, m_Timer, m_csBuffer, _tcslen(m_Timer.m_csBuffer));
+	ReleaseDC(m_hWnd, hdc);
+	return true;
 }
 
 bool bgSample::Release()
 {
-	return false;
+	m_Timer.Release();
+	return true;
 }
 
 bgSample::bgSample()
