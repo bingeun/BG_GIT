@@ -1,4 +1,4 @@
-#include "TWindow.h"
+#include "bgWindow.h"
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -24,7 +24,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-bool TWindow::SetWindow(HINSTANCE hInstance)
+bool bgWindow::SetWindow(HINSTANCE hInstance)
 {
 	// 1. 윈도우 클래스 객체 등록
 	WNDCLASSEX wc;
@@ -63,10 +63,10 @@ bool TWindow::SetWindow(HINSTANCE hInstance)
 	return true;
 }
 
-TWindow::TWindow()
+bgWindow::bgWindow()
 {
 }
 
-TWindow::~TWindow()
+bgWindow::~bgWindow()
 {
 }

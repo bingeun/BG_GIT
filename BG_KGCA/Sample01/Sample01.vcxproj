@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{2AEC28AC-5A74-495D-9AFB-7F8B12D5EB37}</ProjectGuid>
+    <ProjectGuid>{5E3EB599-8E4D-424D-AD94-5FEC87A77D12}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>bgWin1</RootNamespace>
+    <RootNamespace>Sample01</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -91,10 +91,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\\..\\include\\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\\..\\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bgCoreLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,20 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bgBase.cpp" />
-    <ClCompile Include="bgCore.cpp" />
-    <ClCompile Include="bgSample.cpp" />
-    <ClCompile Include="bgTimer.cpp" />
-    <ClCompile Include="bgWindow.cpp" />
-    <ClCompile Include="WinMain.cpp" />
+    <ClInclude Include="Sample.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bgBase.h" />
-    <ClInclude Include="bgCore.h" />
-    <ClInclude Include="bgSample.h" />
-    <ClInclude Include="bgStd.h" />
-    <ClInclude Include="bgTimer.h" />
-    <ClInclude Include="bgWindow.h" />
+    <ClCompile Include="Sample.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

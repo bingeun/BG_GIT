@@ -4,7 +4,7 @@
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
-class TWindow
+class bgWindow
 {
 public:
 	HWND m_hWnd;
@@ -15,7 +15,7 @@ public:
 	bool SetWindow(HINSTANCE hInstance);
 
 public:
-	TWindow();
-	virtual ~TWindow();
+	bgWindow();
+	virtual ~bgWindow();
 };
 
