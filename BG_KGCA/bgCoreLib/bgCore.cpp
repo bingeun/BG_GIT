@@ -25,6 +25,8 @@ bool bgCore::GameInit()
 {
 	m_Timer.Init();
 	m_Input.Init();
+
+	Init();
 	return true;
 }
 

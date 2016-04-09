@@ -1,8 +1,5 @@
 #include "bgWindow.h"
 
-HWND g_hWnd = NULL;
-HINSTANCE g_hInstance;
-
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
@@ -27,22 +24,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-void bgWindow::SetRect(int iWidth, int iHeight)
+bool bgWindow::SetWindow(HINSTANCE hInstance)
 {
-	m_iWidth = iWidth;
-	m_iHeight = iHeight;
-}
-
-bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, int iWidth, int iHeight)
-{
-	m_hInstance = hInstance;
-	g_hInstance = hInstance;
-	if (m_iWidth == 0 && m_iHeight == 0)
-	{
-		m_iWidth = iWidth;
-		m_iHeight = iHeight;
-	}
-
 	// 1. 윈도우 클래스 객체 등록
 	WNDCLASSEX wc;
 	ZeroMemory(&wc, sizeof(WNDCLASSEX));
@@ -74,8 +57,6 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 	{
 		ShowWindow(m_hWnd, SW_SHOW);
 	}
-	g_hWnd = m_hWnd;
-
 	GetWindowRect(m_hWnd, &m_rtWindow);
 	GetClientRect(m_hWnd, &m_rtClient);
 

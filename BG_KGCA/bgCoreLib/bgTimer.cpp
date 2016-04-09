@@ -1,13 +1,16 @@
 #include "bgTimer.h"
+#include "bgSys.h"
 
-
+float g_fSecondPerFrame = 0.0f;
 
 bool bgTimer::Init()
 {
 	m_fSecondPerFrame = 0.0f;
 	m_iFPS = 0;
-	m_dwBeforeTick = timeGetTime();
+	m_dwFrameCounter = 0;
 	m_fAccumulation = 0.0f;
+	m_fFrameTime = 0.0f;
+	m_dwBeforeTick = timeGetTime();
 	return true;
 }
 
@@ -16,8 +19,9 @@ bool bgTimer::Frame()
 	DWORD dwCurrentTick = timeGetTime();
 	DWORD dwElapseTick = dwCurrentTick - m_dwBeforeTick;
 	m_fSecondPerFrame = dwElapseTick / 1000.0f;
+	g_fSecondPerFrame = m_fSecondPerFrame;
 	m_fAccumulation += m_fSecondPerFrame;
-	m_fFrameTime += m_fFrameTime;
+	m_fFrameTime += m_fSecondPerFrame;
 
 	if (m_fFrameTime >= 1.0f)
 	{
@@ -32,7 +36,19 @@ bool bgTimer::Frame()
 
 bool bgTimer::Render()
 {
-	static float;
+#ifdef _DEBUG
+	static float fTime = 0.0f;
+	fTime += m_fSecondPerFrame;
+	if (fTime >= 1.0f)
+	{
+		_stprintf_s(m_csBuffer, L"FPS = [%d] %10.4f %10.4f", m_iFPS, m_fSecondPerFrame, m_fAccumulation);
+		fTime = 0.0f;
+	}
+	HDC hdc = GetDC(g_hWnd);
+	//SetBkMode(hdc, TRANSPARENT); // 배경 투명하게
+	TextOut(hdc, 0, 0, m_csBuffer, _tcslen(m_csBuffer));
+	ReleaseDC(g_hWnd, hdc);
+#endif // _DEBUG
 	return true;
 }
 
