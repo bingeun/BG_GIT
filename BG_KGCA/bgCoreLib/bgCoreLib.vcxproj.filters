@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{fa033061-9a61-4c78-8bba-10bb38e90685}</UniqueIdentifier>
     </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Core">
+      <UniqueIdentifier>{5b66c462-f2b6-490c-9b2e-b1161ffe393b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DataStructure">
+      <UniqueIdentifier>{02821572-acd5-481c-84b0-a3f6687fb67f}</UniqueIdentifier>
     </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
@@ -15,52 +16,64 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="bgBitmapMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
     <ClInclude Include="bgBase.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="bgCore.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bgStd.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bgTimer.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="bgWindow.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="bgInput.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="bgBitmap.h">
-      <Filter>헤더 파일</Filter>
+    <ClInclude Include="bgStd.h">
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="bgSys.h">
-      <Filter>헤더 파일</Filter>
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="bgTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="bgWindow.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="bgHashTable.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="bgLinkedList.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="bgNode.h">
+      <Filter>DataStructure</Filter>
+    </ClInclude>
+    <ClInclude Include="bgBitmap.h">
+      <Filter>Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bgBitmapMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
     <ClCompile Include="bgBase.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="bgCore.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bgTimer.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bgWindow.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="bgInput.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="bgTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="bgWindow.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="bgBitmap.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,5 +1,6 @@
 #pragma once
 #include "bgStd.h"
+#include "bgSys.h"
 
 class bgWindow
 {
@@ -14,6 +15,7 @@ public:
 public:
 	void	SetRect(int iWidth, int iHeight);
 	bool	SetWindow(HINSTANCE hInstance, TCHAR* titleName = L"BG Project", int iX = 0, int iY = 0, int iWidth = 800, int iHeight = 600);
+	void	CenterWindow();
 
 public:
 	bgWindow();

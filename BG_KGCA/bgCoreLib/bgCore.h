@@ -12,17 +12,22 @@ public:
 public:
 	virtual bool	Init();
 	virtual bool	Frame();
+	virtual bool	PreRender();
 	virtual bool	Render();
+	virtual bool	PostRender();
 	virtual bool	Release();
+
+	virtual void	DebugString();
 	virtual void	MsgEvent(MSG msg);
 
 public:
-	bool Run();
 	bool GameRun();
 	bool GameInit();
 	bool GameFrame();
 	bool GameRender();
 	bool GameRelease();
+
+	bool Run();
 
 public:
 	bgCore();

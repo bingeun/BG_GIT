@@ -98,7 +98,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
    HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+      400, 200, 800, 600, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
@@ -145,9 +145,31 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다.
-            EndPaint(hWnd, &ps);
+			HDC hdc;
+			LOGFONT lf;
+			HFONT hFont, OldFont;
+			TCHAR *str = TEXT("동해물과 백두산이 마르고 닳도록...");
+			hdc = BeginPaint(hWnd, &ps);
+			lf.lfHeight = 32;
+			lf.lfWidth = 0;
+			lf.lfEscapement = -450;
+			lf.lfOrientation = 0;
+			lf.lfWeight = 0;
+			lf.lfItalic = 0;
+			lf.lfUnderline = 0;
+			lf.lfStrikeOut = 0;
+			lf.lfCharSet = HANGEUL_CHARSET;
+			lf.lfOutPrecision = 0;
+			lf.lfClipPrecision = 0;
+			lf.lfQuality = 0;
+			lf.lfPitchAndFamily = VARIABLE_PITCH | FF_ROMAN;
+			lstrcpy(lf.lfFaceName, TEXT("궁서"));
+			hFont = CreateFontIndirect(&lf);
+			OldFont = (HFONT)SelectObject(hdc, hFont);
+			TextOut(hdc, 50, 100, str, lstrlen(str));
+			SelectObject(hdc, OldFont);
+			DeleteObject(hFont);
+			EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:

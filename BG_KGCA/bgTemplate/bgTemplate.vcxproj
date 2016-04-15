@@ -156,8 +156,6 @@
     <ClInclude Include="bgSubject.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bgHashTable.cpp" />
-    <ClCompile Include="bgLinkedList.cpp" />
     <ClCompile Include="bgManager.cpp" />
     <ClCompile Include="bgStudent.cpp" />
     <ClCompile Include="bgSubject.cpp" />

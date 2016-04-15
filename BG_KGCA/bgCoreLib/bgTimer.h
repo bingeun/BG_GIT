@@ -1,17 +1,15 @@
 #pragma once
 #include "bgBase.h"
 
-class bgTimer : public bgBase
+class bgTimer : public bgBase, public bgSingleton<bgTimer>
 {
 public:
+	TCHAR	m_csBuffer[MAX_PATH];
 	int		m_iFPS;
 	float	m_fSecondPerFrame;
 	float	m_fAccumulation;
-
-public:
-	TCHAR	m_csBuffer[MAX_PATH];
-	DWORD	m_dwBeforeTick;
 	float	m_fFrameTime;
+	DWORD	m_dwBeforeTick;
 	DWORD	m_dwFrameCounter;
 
 public:

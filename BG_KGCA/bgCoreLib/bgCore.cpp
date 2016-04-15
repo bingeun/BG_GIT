@@ -11,7 +11,17 @@ bool bgCore::Frame()
 	return true;
 }
 
+bool bgCore::PreRender()
+{
+	return true;
+}
+
 bool bgCore::Render()
+{
+	return true;
+}
+
+bool bgCore::PostRender()
 {
 	return true;
 }
@@ -25,7 +35,6 @@ bool bgCore::GameInit()
 {
 	m_Timer.Init();
 	m_Input.Init();
-
 	Init();
 	return true;
 }
@@ -41,17 +50,22 @@ bool bgCore::GameFrame()
 {
 	m_Timer.Frame();
 	m_Input.Frame();
-
 	Frame();
 	return true;
 }
 
 bool bgCore::GameRender()
 {
+	PreRender();
+	Render();
+
+	// 정보 출력
 	m_Timer.Render();
 	m_Input.Render();
+	DebugString();
 
-	Render();
+	PostRender();
+
 	return true;
 }
 
@@ -59,9 +73,17 @@ bool bgCore::GameRelease()
 {
 	m_Timer.Release();
 	m_Input.Release();
-
 	Release();
 	return true;
+}
+
+void bgCore::DebugString()
+{
+#ifdef _DEBUG
+	TCHAR str[MAX_PATH] = { 0, };
+	_stprintf_s(str, L"%d, %d\n", 800, 600);
+	OutputDebugString(str);
+#endif // _DEBUG
 }
 
 void bgCore::MsgEvent(MSG msg)

@@ -1,16 +1,14 @@
 #include "bgTimer.h"
 #include "bgSys.h"
 
-float g_fSecondPerFrame = 0.0f;
+int		g_iFPS;
+float	g_fSecondPerFrame;
+float	g_fAccumulation;
 
 bool bgTimer::Init()
 {
-	m_fSecondPerFrame = 0.0f;
-	m_iFPS = 0;
-	m_dwFrameCounter = 0;
-	m_fAccumulation = 0.0f;
-	m_fFrameTime = 0.0f;
 	m_dwBeforeTick = timeGetTime();
+	ZeroMemory(m_csBuffer, sizeof(TCHAR)* MAX_PATH);
 	return true;
 }
 
@@ -18,14 +16,15 @@ bool bgTimer::Frame()
 {
 	DWORD dwCurrentTick = timeGetTime();
 	DWORD dwElapseTick = dwCurrentTick - m_dwBeforeTick;
-	m_fSecondPerFrame = dwElapseTick / 1000.0f;
-	g_fSecondPerFrame = m_fSecondPerFrame;
+
+	g_fSecondPerFrame = dwElapseTick / 1000.0f;
+	m_fSecondPerFrame = g_fSecondPerFrame;
 	m_fAccumulation += m_fSecondPerFrame;
 	m_fFrameTime += m_fSecondPerFrame;
 
 	if (m_fFrameTime >= 1.0f)
 	{
-		m_iFPS = m_dwFrameCounter;
+		m_iFPS = g_iFPS = m_dwFrameCounter;
 		m_fFrameTime -= 1.0f;
 		m_dwFrameCounter = 0;
 	}
@@ -59,6 +58,11 @@ bool bgTimer::Release()
 
 bgTimer::bgTimer()
 {
+	m_iFPS = 0;
+	m_dwFrameCounter = 0;
+	m_fFrameTime = 0.0f;
+	m_fAccumulation = 0.0f;
+	m_fSecondPerFrame = 0.0f;
 }
 
 

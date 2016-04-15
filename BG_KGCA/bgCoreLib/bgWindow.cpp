@@ -1,7 +1,5 @@
 #include "bgWindow.h"
 
-HWND g_hWnd = NULL;
-HINSTANCE g_hInstance;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -17,7 +15,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		UINT iWidth = LOWORD(lParam);
 		UINT iHeight = HIWORD(lParam);
-		//MessageBox(hWnd, L"BODY", L"TITLE", MB_OK);
 		TCHAR str[MAX_PATH] = { 0, };
 		_stprintf_s(str, L"%d, %d\n", iWidth, iHeight);
 		OutputDebugString(str);
@@ -64,10 +61,14 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 		return false;
 	}
 
+	// 클라이언트 영역을 정확하게 설정하기 위해 계산
+	RECT rt = { 0, 0, m_iWidth, m_iHeight };
+	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, FALSE);
+
 	// 2. 등록된 객체 사용하여 윈도우 생성
-	m_hWnd = CreateWindowEx(
-		WS_EX_APPWINDOW, L"BG", L"BG First!", WS_OVERLAPPEDWINDOW, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
-		(1920 - 800) / 2, (1080 - 600) / 2, 800, 600, NULL, NULL, hInstance, NULL);
+	m_hWnd = CreateWindowEx( // WS_EX_APPWINDOW 기본, WS_EX_TOPMOST 항상 위에
+		WS_EX_APPWINDOW, L"BG", L"BG First!", WS_POPUPWINDOW, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
+		(1920 - 800) / 2, (1080 - 600) / 2, rt.right - rt.left, rt.bottom - rt.top, NULL, NULL, hInstance, NULL);
 
 	// 3. 윈도우 보이기
 	if (m_hWnd != NULL)
@@ -80,6 +81,18 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 	GetClientRect(m_hWnd, &m_rtClient);
 
 	return true;
+}
+
+void bgWindow::CenterWindow()
+{
+	int iScreenWidth = GetSystemMetrics(SM_CXSCREEN);
+	int iScreenHeight = GetSystemMetrics(SM_CYSCREEN);
+	int x = (iScreenWidth - (m_rtWindow.right - m_rtWindow.left)) / 2;
+	int y = (iScreenHeight - (m_rtWindow.bottom - m_rtWindow.top)) / 2;
+	int w = m_rtWindow.right - m_rtWindow.left;
+	int h = m_rtWindow.bottom - m_rtWindow.top;
+
+	MoveWindow(m_hWnd, x, y, w, h, true);
 }
 
 bgWindow::bgWindow()

@@ -35,12 +35,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bgHashTable.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="bgLinkedList.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="bgManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>

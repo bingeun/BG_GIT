@@ -151,10 +151,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="bgSample.h" />
+    <ClInclude Include="bgEnemy.h" />
+    <ClInclude Include="bgHero.h" />
+    <ClInclude Include="bgManager.h" />
+    <ClInclude Include="bgObject.h" />
+    <ClInclude Include="GameMain.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bgSample.cpp" />
+    <ClCompile Include="bgEnemy.cpp" />
+    <ClCompile Include="bgHero.cpp" />
+    <ClCompile Include="bgManager.cpp" />
+    <ClCompile Include="bgObject.cpp" />
+    <ClCompile Include="GameMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
