@@ -1,53 +1,84 @@
 #include "bgBitmapMgr.h"
 
 
-int bgBitmapMgr::Add(TCHAR * pszName)
+INT bgBitmapMgr::Add(TCHAR* pszName, TCHAR* pszNameMask)
 {
-	bgNode<bgBitmap>* pNode = m_List.m_pHead;
-	while (pNode)
+	map<INT, bgBitmap*>::iterator itor;
+
+	for (itor = m_List.begin(); itor != m_List.end(); itor++)
 	{
-		if (!_tcsicmp(pszName, pNode->m_pData->GetName()))
-			return pNode->m_pData->GetIndex();
-		pNode = pNode->m_pNext;
+		bgBitmap* data = (*itor).second;
+		if (!_tcsicmp(pszName, data->m_szName.c_str()))
+		{
+			return (*itor).first;
+		}
 	}
-	bgBitmap* newBitmap = new bgBitmap;
-	newBitmap->Init();
-	if (newBitmap->Load(pszName))
+
+	bgBitmap* data = new bgBitmap;
+	data->Init();
+	if (data->Load(pszName, pszNameMask))
 	{
-		m_List.AddLink(newBitmap);
-		m_iCounter++;
+		m_List.insert(make_pair(m_iKeyCount++, data));
 	}
-	return m_iCounter - 1;
+
+	return m_iKeyCount - 1;
 }
 
-bgBitmap * bgBitmapMgr::GetBitmap(int iIndex)
+bgBitmap * bgBitmapMgr::GetPtr(INT iKey)
 {
-	bgNode<bgBitmap>* pNode = m_List.m_pHead;
-	while (pNode)
+	map<INT, bgBitmap*>::iterator itor;
+
+	itor = m_List.find(iKey);
+	if (itor == m_List.end())
+		return NULL;
+
+	return (*itor).second;
+}
+
+bgBitmap * bgBitmapMgr::GetPtr(TCHAR * szName)
+{
+	map<INT, bgBitmap*>::iterator itor;
+
+	for (itor = m_List.begin(); itor != m_List.end(); itor++)
 	{
-		if (pNode->m_pData->GetIndex() == iIndex)
-			return pNode->m_pData;
-		pNode = pNode->m_pNext;
+		if (szName == (*itor).second->m_szName)
+		{
+			return (*itor).second;
+		}
+	}
+	return NULL;
+}
+
+INT bgBitmapMgr::GetKey(TCHAR * szName)
+{
+	map<INT, bgBitmap*>::iterator itor;
+
+	for (itor = m_List.begin(); itor != m_List.end(); itor++)
+	{
+		if (szName == (*itor).second->m_szName)
+		{
+			return (*itor).first;
+		}
 	}
 	return NULL;
 }
 
 bool bgBitmapMgr::Release()
 {
-	bgNode<bgBitmap>* pNode = m_List.m_pHead;
-	bgNode<bgBitmap>* pNodeNext;
-	while (pNode)
+	map<INT, bgBitmap*>::iterator itor;
+	for (itor = m_List.begin(); itor != m_List.end(); itor++)
 	{
-		pNodeNext = pNode->m_pNext;
-		delete pNode;
-		pNode = pNodeNext;
+		bgBitmap* data = (*itor).second;
+		delete data;
 	}
+	m_List.clear();
 	return true;
 }
 
 bgBitmapMgr::bgBitmapMgr()
 {
-	m_iCounter = 0;
+	m_iKeyCount = 0;
+	m_List.clear();
 }
 
 

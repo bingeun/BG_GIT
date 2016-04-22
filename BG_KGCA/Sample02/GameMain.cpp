@@ -1,5 +1,5 @@
-#include "GameMain.h"
 #include "bgSys.h"
+#include "GameMain.h"
 
 bool GameMain::Init()
 {
@@ -7,10 +7,15 @@ bool GameMain::Init()
 	m_hOffScreenDC = CreateCompatibleDC(m_hScreenDC);
 	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hScreenDC, 800, 600);
 
-	SelectObject(m_hOffScreenDC, m_hOffScreen);
 
-	m_Background.Load(m_hOffScreenDC, m_hOffScreenDC, L"../../data/background.bmp");
-	m_Hero.Load(m_hOffScreenDC, m_hOffScreenDC, L"../../data/hero.bmp");
+	I_SpriteMgr.Add(L"../../data/airplane.txt");
+
+	SelectObject(m_hOffScreenDC, m_hOffScreenBitmap);
+	//m_Ground.Load(m_hScreenDC, m_hOffScreenDC, L"../../data/background.bmp");
+	//m_Hero.Load(m_hScreenDC, m_hOffScreenDC, L"../../data/hero.bmp", L"../../data/hero_mask.bmp");
+	//m_Enemy.Load(m_hScreenDC, m_hOffScreenDC, L"../../data/enemy.bmp", L"../../data/enemy_mask.bmp");
+	//m_Hero.Load(m_hScreenDC, m_hOffScreenDC, L"../../data/airplane.bmp", L"../../data/airplane_mask.bmp");
+	m_Hero.Init();
 	return true;
 }
 
@@ -18,36 +23,36 @@ bool GameMain::Frame()
 {
 	if (m_Input.KeyCheck('A') == KEY_HOLD)
 	{
-		m_iX -= g_fSecondPerFrame * 100.0f;
+		m_fX -= g_fSPF * 100.0f;
 	}
 	if (m_Input.KeyCheck('D') == KEY_HOLD)
 	{
-		m_iX += g_fSecondPerFrame * 100.0f;
+		m_fX += g_fSPF * 100.0f;
 	}
 	if (m_Input.KeyCheck('W') == KEY_HOLD)
 	{
-		m_iY -= g_fSecondPerFrame * 100.0f;
+		m_fY -= g_fSPF * 100.0f;
 	}
 	if (m_Input.KeyCheck('S') == KEY_HOLD)
 	{
-		m_iY += g_fSecondPerFrame * 100.0f;
+		m_fY += g_fSPF * 100.0f;
 	}
 	return true;
 }
 
 bool GameMain::Render()
 {
-	COLORREF bkColor = RGB(255, 255, 255);
-	HBRUSH hbrBack = CreateSolidBrush(bkColor);
-	SelectObject(m_hOffScreenDC, hbrBack);
+	COLORREF colorBack = RGB(0xAA, 0xAA, 0xFF);
+	HBRUSH hBrushBack = CreateSolidBrush(colorBack);
+	SelectObject(m_hOffScreenDC, hBrushBack);
 	PatBlt(m_hOffScreenDC, 0, 0, 800, 600, PATCOPY);
 
-	m_Background.Render();
+	//m_Ground.Render();
+	//m_Hero.Render();
+	//m_Enemy.Render();
 	m_Hero.Render();
 
-	BitBlt(m_hScreenDC, 0, 0, 800, 600, m_hOffScreenDC, 0, 0, SRCCOPY);
-	//BitBlt(m_hScreenDC, (800 - 512) / 2, (600 - 512) / 2, 512, 512, m_Background.m_hMemDC, 0, 0, SRCCOPY);
-	//BitBlt(m_hScreenDC, (800 - 128) / 2 + (int)m_iX, (600 - 128) / 2 + (int)m_iY, 128, 128, m_Hero.m_hMemDC, 0, 0, SRCCOPY);
+	DeleteObject(hBrushBack);
 	return true;
 }
 
@@ -71,6 +76,7 @@ int WINAPI wWinMain(HINSTANCE hInstatnce, HINSTANCE hPrevInstatnce, LPWSTR lpCmd
 	GameMain win;
 	if (win.SetWindow(hInstatnce) == true)
 	{
+		win.CenterWindow();
 		win.Run();
 	}
 	return 0;

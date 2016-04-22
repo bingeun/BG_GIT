@@ -1,19 +1,23 @@
 #pragma once
 #include "bgCore.h"
-#include "bgBitmap.h"
+#include "bgGround.h"
+#include "bgHero.h"
+#include "bgEnemy.h"
+#include "bgSpriteMgr.h"
 
 class GameMain : public bgCore
 {
 public:
 	HDC			m_hScreenDC;
 	HDC			m_hOffScreenDC;
-	HBITMAP		m_h;
+	HBITMAP		m_hOffScreenBitmap;
 
-	bgObject	m_Background;
-	bgObject	m_Hero;
+	//bgGround	m_Ground;
+	bgHero		m_Hero;
+	//bgEnemy		m_Enemy;
 
-	float		m_iX;
-	float		m_iY;
+	float		m_fX;
+	float		m_fY;
 
 public:
 	bool Init();

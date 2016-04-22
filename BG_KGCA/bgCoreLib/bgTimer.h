@@ -6,7 +6,7 @@ class bgTimer : public bgBase, public bgSingleton<bgTimer>
 public:
 	TCHAR	m_csBuffer[MAX_PATH];
 	int		m_iFPS;
-	float	m_fSecondPerFrame;
+	float	m_fSPF;
 	float	m_fAccumulation;
 	float	m_fFrameTime;
 	DWORD	m_dwBeforeTick;

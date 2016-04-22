@@ -1,8 +1,9 @@
 #include "bgTimer.h"
 #include "bgSys.h"
 
+// 타이머 관련 전역변수
 int		g_iFPS;
-float	g_fSecondPerFrame;
+float	g_fSPF;
 float	g_fAccumulation;
 
 bool bgTimer::Init()
@@ -17,19 +18,23 @@ bool bgTimer::Frame()
 	DWORD dwCurrentTick = timeGetTime();
 	DWORD dwElapseTick = dwCurrentTick - m_dwBeforeTick;
 
-	g_fSecondPerFrame = dwElapseTick / 1000.0f;
-	m_fSecondPerFrame = g_fSecondPerFrame;
-	m_fAccumulation += m_fSecondPerFrame;
-	m_fFrameTime += m_fSecondPerFrame;
+	m_fSPF = dwElapseTick / 1000.0f;
+	m_fAccumulation += m_fSPF;
+	m_fFrameTime += m_fSPF;
 
 	if (m_fFrameTime >= 1.0f)
 	{
-		m_iFPS = g_iFPS = m_dwFrameCounter;
+		m_iFPS = m_dwFrameCounter;
 		m_fFrameTime -= 1.0f;
 		m_dwFrameCounter = 0;
 	}
 	m_dwFrameCounter++;
 	m_dwBeforeTick = dwCurrentTick;
+
+	// 전역변수 설정
+	g_iFPS = m_iFPS;
+	g_fSPF = m_fSPF;
+	g_fAccumulation = m_fAccumulation;
 	return true;
 }
 
@@ -37,16 +42,14 @@ bool bgTimer::Render()
 {
 #ifdef _DEBUG
 	static float fTime = 0.0f;
-	fTime += m_fSecondPerFrame;
+	fTime += m_fSPF;
 	if (fTime >= 1.0f)
 	{
-		_stprintf_s(m_csBuffer, L"FPS = [%d] %10.4f %10.4f", m_iFPS, m_fSecondPerFrame, m_fAccumulation);
+		_stprintf_s(m_csBuffer, L"FPS [%d], SPF [%.4f], Acc [%.4f]", m_iFPS, m_fSPF, m_fAccumulation);
 		fTime = 0.0f;
 	}
-	HDC hdc = GetDC(g_hWnd);
-	//SetBkMode(hdc, TRANSPARENT); // 배경 투명하게
-	TextOut(hdc, 0, 0, m_csBuffer, _tcslen(m_csBuffer));
-	ReleaseDC(g_hWnd, hdc);
+	SetBkMode(g_hOffScreenDC, TRANSPARENT); // 배경 투명하게
+	TextOut(g_hOffScreenDC, 2, 2, m_csBuffer, _tcslen(m_csBuffer));
 #endif // _DEBUG
 	return true;
 }
@@ -59,10 +62,15 @@ bool bgTimer::Release()
 bgTimer::bgTimer()
 {
 	m_iFPS = 0;
-	m_dwFrameCounter = 0;
-	m_fFrameTime = 0.0f;
+	m_fSPF = 0.0f;
 	m_fAccumulation = 0.0f;
-	m_fSecondPerFrame = 0.0f;
+	m_fFrameTime = 0.0f;
+	m_dwFrameCounter = 0;
+
+	// 전역변수 설정
+	g_iFPS = 0;
+	g_fSPF = 0.0f;
+	g_fAccumulation = 0.0f;
 }
 
 

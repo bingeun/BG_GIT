@@ -1,5 +1,11 @@
 #include "bgWindow.h"
 
+bgWindow*	g_pWindow;
+
+// 윈도우 관련 전역변수
+HWND		g_hWnd;
+HINSTANCE	g_hInstance;
+RECT		g_rtWindow;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
@@ -24,16 +30,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }
 
-void bgWindow::SetRect(int iWidth, int iHeight)
-{
-	m_iWidth = iWidth;
-	m_iHeight = iHeight;
-}
-
 bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, int iWidth, int iHeight)
 {
 	m_hInstance = hInstance;
-	g_hInstance = hInstance;
+
 	if (m_iWidth == 0 && m_iHeight == 0)
 	{
 		m_iWidth = iWidth;
@@ -67,20 +67,58 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 
 	// 2. 등록된 객체 사용하여 윈도우 생성
 	m_hWnd = CreateWindowEx( // WS_EX_APPWINDOW 기본, WS_EX_TOPMOST 항상 위에
-		WS_EX_APPWINDOW, L"BG", L"BG First!", WS_POPUPWINDOW, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
-		(1920 - 800) / 2, (1080 - 600) / 2, rt.right - rt.left, rt.bottom - rt.top, NULL, NULL, hInstance, NULL);
+		WS_EX_APPWINDOW, L"BG", L"BG First!", WS_OVERLAPPEDWINDOW, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
+		iX, iY, rt.right - rt.left, rt.bottom - rt.top, NULL, NULL, hInstance, NULL);
 
 	// 3. 윈도우 보이기
 	if (m_hWnd != NULL)
 	{
 		ShowWindow(m_hWnd, SW_SHOW);
 	}
-	g_hWnd = m_hWnd;
 
 	GetWindowRect(m_hWnd, &m_rtWindow);
 	GetClientRect(m_hWnd, &m_rtClient);
 
+	// 전역변수 설정
+	g_hWnd = m_hWnd;
+	g_hInstance = m_hInstance;
+	g_rtWindow = m_rtWindow;
 	return true;
+}
+
+bool bgWindow::Run()
+{
+	MSG msg;
+
+	GameInit();
+	ZeroMemory(&msg, sizeof(msg));
+	while (msg.message != WM_QUIT)
+	{
+		// 메세지 큐에서 원시 메세지 1개 가져오기
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			TranslateMessage(&msg); // 원시 메세지 해석
+			DispatchMessage(&msg); // 해석된 메세지를 프로시저에 전달
+			MsgEvent(msg);
+		}
+		else
+		{
+			GameRun();
+		}
+	}
+	GameRelease();
+	return true;
+}
+
+bool bgWindow::Release()
+{
+	return true;
+}
+
+void bgWindow::SetRect(int iWidth, int iHeight)
+{
+	m_iWidth = iWidth;
+	m_iHeight = iHeight;
 }
 
 void bgWindow::CenterWindow()
@@ -95,8 +133,16 @@ void bgWindow::CenterWindow()
 	MoveWindow(m_hWnd, x, y, w, h, true);
 }
 
+bool bgWindow::ResizeClient(UINT iWidth, UINT iHeight)
+{
+	GetClientRect(m_hWnd, &m_rtWindow);
+	g_rtWindow = m_rtWindow;
+	return true;
+}
+
 bgWindow::bgWindow()
 {
+	g_pWindow = this;
 }
 
 bgWindow::~bgWindow()

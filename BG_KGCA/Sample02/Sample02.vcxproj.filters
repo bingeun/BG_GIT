@@ -13,37 +13,40 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameMain.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
     <ClInclude Include="bgEnemy.h">
       <Filter>Object</Filter>
     </ClInclude>
     <ClInclude Include="bgHero.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="bgObject.h">
+    <ClInclude Include="bgGround.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="bgManager.h">
-      <Filter>GamePlay</Filter>
-    </ClInclude>
-    <ClInclude Include="GameMain.h">
-      <Filter>GamePlay</Filter>
+    <ClInclude Include="bgEffect.h">
+      <Filter>Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
     <ClCompile Include="bgEnemy.cpp">
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="bgHero.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="bgObject.cpp">
+    <ClCompile Include="bgGround.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="bgManager.cpp">
-      <Filter>GamePlay</Filter>
+    <ClCompile Include="bgEffect.cpp">
+      <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="GameMain.cpp">
-      <Filter>GamePlay</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\airplane.txt" />
   </ItemGroup>
 </Project>

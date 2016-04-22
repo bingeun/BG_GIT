@@ -100,11 +100,9 @@ bool bgInput::Frame()
 bool bgInput::Render()
 {
 #ifdef _DEBUG
-	_stprintf_s(m_csBuffer, L"X = [%d], Y = [%d]", m_MousePos.x, m_MousePos.y);
-	HDC hdc = GetDC(g_hWnd);
-	//SetBkMode(hdc, TRANSPARENT); // 배경 투명하게
-	TextOut(hdc, 0, 16, m_csBuffer, _tcslen(m_csBuffer));
-	ReleaseDC(g_hWnd, hdc);
+	_stprintf_s(m_csBuffer, L"Mouse [%d, %d]", m_MousePos.x, m_MousePos.y);
+	SetBkMode(g_hOffScreenDC, TRANSPARENT); // 배경 투명하게
+	TextOut(g_hOffScreenDC, 2, 16, m_csBuffer, _tcslen(m_csBuffer));
 #endif // _DEBUG
 	return true;
 }

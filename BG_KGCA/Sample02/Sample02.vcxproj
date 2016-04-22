@@ -18,6 +18,23 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bgEffect.h" />
+    <ClInclude Include="bgEnemy.h" />
+    <ClInclude Include="bgGround.h" />
+    <ClInclude Include="bgHero.h" />
+    <ClInclude Include="GameMain.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="bgEffect.cpp" />
+    <ClCompile Include="bgEnemy.cpp" />
+    <ClCompile Include="bgGround.cpp" />
+    <ClCompile Include="bgHero.cpp" />
+    <ClCompile Include="GameMain.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\data\airplane.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DF17B016-FAA3-4C0C-9506-69926800C6CC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -97,7 +114,7 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>bgCoreLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>bgCoreLib.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -150,20 +167,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="bgEnemy.h" />
-    <ClInclude Include="bgHero.h" />
-    <ClInclude Include="bgManager.h" />
-    <ClInclude Include="bgObject.h" />
-    <ClInclude Include="GameMain.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="bgEnemy.cpp" />
-    <ClCompile Include="bgHero.cpp" />
-    <ClCompile Include="bgManager.cpp" />
-    <ClCompile Include="bgObject.cpp" />
-    <ClCompile Include="GameMain.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

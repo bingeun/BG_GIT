@@ -1,23 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{fa033061-9a61-4c78-8bba-10bb38e90685}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core">
       <UniqueIdentifier>{5b66c462-f2b6-490c-9b2e-b1161ffe393b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="DataStructure">
-      <UniqueIdentifier>{02821572-acd5-481c-84b0-a3f6687fb67f}</UniqueIdentifier>
     </Filter>
     <Filter Include="리소스 파일">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shape">
+      <UniqueIdentifier>{78c3ba93-9679-4057-80f5-095c1e182795}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FMOD">
+      <UniqueIdentifier>{7574d51c-496d-4e01-a574-c45d44d86059}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bgBitmapMgr.h">
-      <Filter>Manager</Filter>
+    <ClInclude Include="bgWindow.h">
+      <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="bgBase.h">
       <Filter>Core</Filter>
@@ -37,26 +37,53 @@
     <ClInclude Include="bgTimer.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="bgWindow.h">
+    <ClInclude Include="bgBitmap.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgBitmapMgr.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgShape.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgSprite.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgSpriteMgr.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgObject.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgCollision.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="bgHashTable.h">
-      <Filter>DataStructure</Filter>
+    <ClInclude Include="bgSound.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="bgLinkedList.h">
-      <Filter>DataStructure</Filter>
+    <ClInclude Include="fmod.h">
+      <Filter>FMOD</Filter>
     </ClInclude>
-    <ClInclude Include="bgNode.h">
-      <Filter>DataStructure</Filter>
+    <ClInclude Include="fmod.hpp">
+      <Filter>FMOD</Filter>
     </ClInclude>
-    <ClInclude Include="bgBitmap.h">
-      <Filter>Manager</Filter>
+    <ClInclude Include="fmod_codec.h">
+      <Filter>FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_dsp.h">
+      <Filter>FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_errors.h">
+      <Filter>FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_memoryinfo.h">
+      <Filter>FMOD</Filter>
+    </ClInclude>
+    <ClInclude Include="fmod_output.h">
+      <Filter>FMOD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="bgBitmapMgr.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="bgBase.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -73,7 +100,28 @@
       <Filter>Core</Filter>
     </ClCompile>
     <ClCompile Include="bgBitmap.cpp">
-      <Filter>Manager</Filter>
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgBitmapMgr.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgShape.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgSprite.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgSpriteMgr.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgObject.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgCollision.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="bgSound.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

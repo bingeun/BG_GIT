@@ -1,30 +1,78 @@
 #include "bgBitmap.h"
 
 
-bool bgBitmap::Load(TCHAR* pszName)
+bool bgBitmap::Load(TCHAR* pszName, TCHAR* pszNameMask)
 {
-	m_hBitmap = (HBITMAP)LoadImage(g_hInstance, pszName, IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
-	if (m_hBitmap == NULL)
-		return false;
-
-	// 파일경로를 요소별로 분리
+	// 파일경로를 분리할 요소들을 저장할 변수 선언
 	TCHAR Drive[MAX_PATH] = { 0, };
 	TCHAR Dir[MAX_PATH] = { 0, };
 	TCHAR Name[MAX_PATH] = { 0, };
 	TCHAR Ext[MAX_PATH] = { 0, };
-	_tsplitpath_s(pszName, Drive, Dir, Name, Ext);
+	TCHAR NameExt[MAX_PATH] = { 0, };
 
-	// [파일명.확장자] 형태로 멤버변수로 지정
-	_stprintf_s(m_pszName, _T("%s%s"), Name, Ext);
+	// 이미지 불러오기...
+	m_hBitmap = (HBITMAP)LoadImage(g_hInstance, pszName, IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
+	if (m_hBitmap == NULL)
+	{
+		m_bMask = false;
+		return false;
+	}
 
 	GetObject(m_hBitmap, sizeof(BITMAP), &m_BitmapInfo);
 	m_hMemDC = CreateCompatibleDC(m_hScreenDC);
 	m_hOldBitmap = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
-	
+
+	// 파일경로를 요소별로 분리 후, [파일명.확장자] 형태로 멤버변수로 지정
+	_tsplitpath_s(pszName, Drive, Dir, Name, Ext);
+	Ext[4] = 0;
+	memset(NameExt, 0, sizeof(TCHAR) * MAX_PATH);
+	_stprintf_s(NameExt, _T("%s%s"), Name, Ext);
+	m_szName = NameExt;
+
+	// ====================== 마스크 파일을 지정했다면... ========================
+	if (pszNameMask)
+	{
+		// 이미지 불러오기
+		m_hBitmapMask = (HBITMAP)LoadImage(g_hInstance, pszNameMask, IMAGE_BITMAP, 0, 0, LR_DEFAULTSIZE | LR_LOADFROMFILE);
+		if (m_hBitmapMask == NULL)
+		{
+			m_bMask = false;
+			return true;
+		}
+		m_bMask = true;
+
+		GetObject(m_hBitmapMask, sizeof(BITMAP), &m_BitmapInfoMask);
+		m_hMemDCMask = CreateCompatibleDC(m_hScreenDC);
+		SelectObject(m_hMemDCMask, m_hBitmapMask); // m_hOldBitmap = (HBITMAP)... 이미 old 저장했으므로 생략...
+
+		// 파일경로를 요소별로 분리 후, [파일명.확장자] 형태로 멤버변수로 지정
+		_tsplitpath_s(pszNameMask, Drive, Dir, Name, Ext);
+		Ext[4] = 0;
+		memset(NameExt, 0, sizeof(TCHAR) * MAX_PATH);
+		_stprintf_s(NameExt, _T("%s%s"), Name, Ext);
+		m_szNameMask = NameExt;
+	}
+	else
+		m_bMask = false;
+
 	return true;
 }
 
-HBITMAP bgBitmap::GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight, float fAngle = 0)
+bool bgBitmap::Load(DWORD dwBitmap)
+{
+	m_hBitmap = LoadBitmap(g_hInstance, MAKEINTRESOURCE(dwBitmap));
+	GetObject(m_hBitmap, sizeof(BITMAP), &m_BitmapInfo);
+	m_hMemDC = CreateCompatibleDC(m_hScreenDC);
+	m_hOldBitmap = (HBITMAP)SelectObject(m_hMemDC, m_hBitmap);
+
+	m_hBitmapMask = LoadBitmap(g_hInstance, MAKEINTRESOURCE(dwBitmap));
+	GetObject(m_hBitmapMask, sizeof(BITMAP), &m_BitmapInfoMask);
+	m_hMemDCMask = CreateCompatibleDC(m_hScreenDC);
+	SelectObject(m_hMemDCMask, m_hBitmapMask); // m_hOldBitmap = (HBITMAP)... 이미 old 저장했으므로 생략...
+	return true;
+}
+
+HBITMAP bgBitmap::GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight, float fAngle)
 {
 	// 새로운 비트맵 생성 및 초기화
 	HDC		hScreenDC = CreateCompatibleDC(m_hScreenDC);
@@ -39,20 +87,20 @@ HBITMAP bgBitmap::GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight
 
 	// 회전
 	float fRadian = RadianToDegree(fAngle);
-	float fSin = sin(fRadian);
-	float fCos = cos(fRadian);
+	float fSin = (float)sin(fRadian);
+	float fCos = (float)cos(fRadian);
 	XFORM xForm;
 	xForm.eM11 = fCos;
 	xForm.eM12 = -fSin;
 	xForm.eM21 = fSin;
 	xForm.eM22 = fCos;
-	xForm.eDx = iWidth / 2;
-	xForm.eDy = iHeight / 2;
+	xForm.eDx = iWidth / 2.0f;
+	xForm.eDy = iHeight / 2.0f;
 	int iGraphicsModeOld = SetGraphicsMode(hScreenDC, GM_ADVANCED);
 	SetWorldTransform(hScreenDC, &xForm);
 
 	// 출력~!!!
-	BitBlt(hScreenDC, -(rect.right / 2.0f), -(rect.bottom / 2.0f), rect.right, rect.bottom, hdc, rect.left, rect.top, SRCCOPY);
+	BitBlt(hScreenDC, -(rect.right / 2), -(rect.bottom / 2), rect.right, rect.bottom, hdc, rect.left, rect.top, SRCCOPY);
 
 	// 원상복귀
 	SelectObject(hScreenDC, hBitmapOld);
@@ -70,107 +118,43 @@ HBITMAP bgBitmap::GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight
 	return hBitmapResult;
 }
 
-bool bgBitmap::Draw(HDC hdc, POINT pos, RECT rect, DWORD mode = SRCCOPY, float fAngle = 0)
+bool bgBitmap::Draw(HDC hdc, POINT pos, RECT rect, DWORD mode, bool bRotation, float fAngle)
 {
-	switch ()
+	if (!bRotation)
 	{
-	case :
-		break;
+		if (m_bMask)
+			BitBlt(hdc, pos.x, pos.y, rect.right, rect.bottom, m_hMemDCMask, rect.left, rect.top, mode);
+		BitBlt(hdc, pos.x, pos.y, rect.right, rect.bottom, m_hMemDC, rect.left, rect.top, mode);
+	}
+	else
+	{
+		int iWidth, iHeight;
+		if (rect.right > rect.bottom)
+			iWidth = iHeight = rect.right;
+		else
+			iWidth = iHeight = rect.bottom;
+
+		HBITMAP hBitmapMask = GetRotationBitmap(m_hMemDCMask, rect, iWidth, iHeight, fAngle);
+		HBITMAP hBitmap = GetRotationBitmap(m_hMemDC, rect, iWidth, iHeight, fAngle);
+
+		HDC hMemDCMask = CreateCompatibleDC(m_hScreenDC);
+		HDC hMemDC = CreateCompatibleDC(m_hScreenDC);
+
+		HBITMAP hOldMask = (HBITMAP)SelectObject(hMemDCMask, hBitmapMask);
+		HBITMAP hOld = (HBITMAP)SelectObject(hMemDC, hBitmap);
+
+		BitBlt(m_hScreenDC, pos.x, pos.y, iWidth, iHeight, hMemDCMask, 0, 0, SRCAND);
+		BitBlt(m_hScreenDC, pos.x, pos.y, iWidth, iHeight, hMemDC, 0, 0, SRCINVERT);
+		BitBlt(m_hScreenDC, pos.x, pos.y, iWidth, iHeight, hMemDCMask, 0, 0, SRCINVERT);
+
+		SelectObject(hMemDCMask, hOldMask);
+		SelectObject(hMemDC, hOld);
+		DeleteDC(hMemDCMask);
+		DeleteDC(hMemDC);
+		DeleteObject(hBitmapMask);
+		DeleteObject(hBitmap);
 	}
 	return true;
-}
-
-
-HBITMAP GameMain::GetRotationBitmap(HDC hdc, float fAngle, int iWidth, int iHeight)
-{
-	HDC BitmapDC = CreateCompatibleDC(g_hScreenDC);
-	HBITMAP bitmap = CreateCompatibleBitmap(g_hScreenDC, iWidth, iHeight);
-	HBITMAP oldBitmap = SelectObject(BitmapDC, bitmap);
-	HBRUSH back = CreateSolidBrush(RGB(0xFF, 0xFF, 0xFF));
-	HBRUSH oldBrush = (HBRUSH)SelectObject(BitmapDC, back);
-	PatBlt(BitmapDC, 0, 0, iWidth, iHeight, PATCOPY);
-	DeleteObject(SelectObject(BitmapDC, oldBrush));
-
-	float fRad = RadianToDegree(fAngle);
-	float fSin = sin(fAngle);
-	float fCos = cos(fAngle);
-	XFORM xForm;
-	xForm.eM11 = fCos;
-	xForm.eM12 = -fSin;
-	xForm.eM21 = fSin;
-	xForm.eM22 = fCos;
-	xForm.eDx = iWidth / 2;
-	xForm.eDy = iHeight / 2;
-	SetWorldTransform(BitmapDC, &xForm); // 행렬의 곱셈 담당.
-
-	BitBlt(...);
-	DeleteObject(BitmapDC);
-	SetGraphicsMode(hdc, iOldMode);
-	return bitmap;
-}
-
-void bgBitmap::DrawRotate(float fAngle)
-{
-	RECT rt;
-	rt.left = 91;
-	rt.top = 1;
-	rt.right = 41;
-	rt.bottom = 60;
-	int iOffWidth = rt.right;
-	int iOffHeight = rt.bottom;
-	if (iOffWidth > iOffHeight)
-		iOffHeight = iOffWidth;
-	else
-		iOffWidth = iOffHeight;
-	
-	HBITMAP hMaskBitmap = GetRotationBitmap(m_MaskBitmap.m_hMemDC, fAngle, iOffWidth, iOffHeight);
-	HBITMAP hColorBitmap = GetRotationBitmap(m_ColorBitmap.m_hMemDC, fAngle, iOffWidth, iOffHeight);
-
-	HDC hMaskMemDC = CreateCompatibleDC(g_hScreenDC);
-	HDC hColorMemDC = CreateCompatibleDC(g_hScreenDC);
-	HBITMAP hOldMask = (HBITMAP)SelectObject(hMaskMemDC, hMaskBitmap);
-	HBITMAP hOldColor = (HBITMAP)SelectObject(hColorMemDC, hColorBitmap);
-
-	BitBlt();
-	BitBlt();
-	BitBlt();
-
-	SelectObject(hMaskMemDC, hOldMask);
-	SelectObject(hColorMemDC, hOldColor);
-	DeleteDC(hMaskMemDC);
-	DeleteDC(hColorMemDC);
-	DeleteObject(hMaskBitmap);
-	DeleteObject(hColorBitmap);
-
-
-
-
-
-	HDC hdc;
-	hdc = CreateCompatibleDC(m_hScreenDC);
-	HBITMAP hBitmap = CreateCompatibleBitmap(m_hScreenDC, 100, 100);
-	SelectObject(hdc, hBitmap);
-
-	HBRUSH back = CreateSolidBrush(RGB(0xFF, 0xFF, 0xFF));
-	SelectObject(hdc, back);
-	PatBlt(hdc, 0, 0, 100, 100, PATCOPY);
-
-	int OldMode = SetGraphicsMode(BitmapDC, GM_ADVANCED); //hdc, GM_ADVANCED);
-	float fRad = RadianToDegree(fAngle);
-	float fSin = sin(fAngle);
-	float fCos = cos(fAngle);
-	XFORM xForm;
-	xForm.eM11 = fCos;
-	xForm.eM12 = -fSin;
-	xForm.eM21 = fSin;
-	xForm.eM22 = fCos;
-	xForm.eDx = 0;
-	xForm.eDy = 0;
-	SetWorldTransform(hdc, &xForm); // 행렬의 곱셈 담당.
-
-	BitBlt(hdc, 0, 0, 100, 100, 원본DC, 0, 0, SRCCOPY);
-
-	SetGraphicsMode(hdc, OldMode);
 }
 
 bool bgBitmap::Init()
@@ -185,21 +169,22 @@ bool bgBitmap::Frame()
 
 bool bgBitmap::Render()
 {
-	Draw();
 	return true;
 }
 
 bool bgBitmap::Release()
 {
 	SelectObject(m_hMemDC, m_hOldBitmap);
-	//ReleaseDC(g_hWnd, m_hMemDC);
 	ReleaseDC(g_hWnd, m_hMemDC);
+
+	SelectObject(m_hMemDCMask, m_hOldBitmap);
+	ReleaseDC(g_hWnd, m_hMemDCMask);
 	return true;
 }
 
 bgBitmap::bgBitmap()
 {
-	m_iIndex = 0;
+	m_bMask = false;
 }
 
 

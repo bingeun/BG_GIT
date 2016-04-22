@@ -9,12 +9,12 @@ enum KeyState
 	KEY_HOLD,
 };
 
-class bgInput
+class bgInput : public bgSingleton<bgInput>
 {
 public:
+	POINT	m_MousePos;
 	DWORD	m_dwKeyState[256];
 	DWORD	m_dwMouseState[3];
-	POINT	m_MovePt;
 	TCHAR	m_csBuffer[MAX_PATH];
 
 public:
@@ -28,6 +28,6 @@ public:
 
 public:
 	bgInput();
-	~bgInput();
+	virtual ~bgInput();
 };
 

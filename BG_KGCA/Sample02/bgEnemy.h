@@ -1,25 +1,14 @@
 #pragma once
 #include "bgStd.h"
+#include "bgSys.h"
+#include "bgObject.h"
 
-class bgBitmap
+class bgEnemy : public bgObject
 {
 public:
-	HDC		m_hScreenDC;
-	HDC		m_hOffScreenDC;
-	HDC		m_hMemDC;
-	HBITMAP m_hBitmap;
-	HBITMAP m_hOldBitmap;
-	BITMAP	m_hBitInfo;
 
 public:
-	bool	Load(HDC hScreenDC, HDC hOffScreenDC, TCHAR* pFileName);
-	bool	Init();
-	bool	Frame();
-	bool	Render();
-	bool	Release();
-
-public:
-	bgBitmap();
-	virtual ~bgBitmap();
+	bgEnemy();
+	virtual ~bgEnemy();
 };
 
