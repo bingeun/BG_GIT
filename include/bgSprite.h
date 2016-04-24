@@ -14,14 +14,13 @@ class bgSprite
 {
 public:
 	vector<bgFrame>	m_Frame;
+	vector<bgFrame>::iterator m_iterFrame;
 	wstring	m_szName;
 
 	float	m_fTimer;
 	float	m_fSecondPerRender;
 
 public:
-	//
-
 	bool	Init();
 	bool	Frame();
 	bool	Render();

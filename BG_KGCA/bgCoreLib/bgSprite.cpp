@@ -4,6 +4,7 @@
 
 bool bgSprite::Init()
 {
+	m_iterFrame = m_Frame.begin();
 	return true;
 }
 

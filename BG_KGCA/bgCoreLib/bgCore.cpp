@@ -19,6 +19,8 @@ bool bgCore::PostRender()
 
 bool bgCore::DrawDebug()
 {
+#ifdef _DEBUG
+#endif //_DEBUG
 	return true;
 }
 
@@ -27,14 +29,9 @@ bool bgCore::DrawDebug(TCHAR * pString, int iX, int iY)
 #ifdef _DEBUG
 	if (m_hOffScreenDC != NULL)
 	{
-		SetBkColor(m_hOffScreenDC, RGB(255, 0, 0));
-		SetTextColor(m_hOffScreenDC, RGB(0, 0, 255));
-		SetBkMode(m_hOffScreenDC, TRANSPARENT);
-		SetTextAlign(m_hOffScreenDC, TA_LEFT);
-
 		TextOut(m_hOffScreenDC, iX, iY, pString, wcslen(pString));
 	}
-#endif // _DEBUG
+#endif //_DEBUG
 	return true;
 }
 
@@ -47,27 +44,30 @@ bool bgCore::GameRun()
 
 bool bgCore::GameInit()
 {
-	m_Timer.Init();
-	m_Input.Init();
-
 	// 전면 버퍼, 후면 버퍼 & 후면 비트맵 생성
 	m_hScreenDC = GetDC(m_hWnd);
 	m_hOffScreenDC = CreateCompatibleDC(m_hScreenDC);
-	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hScreenDC, m_rtWindow.right, m_rtWindow.bottom);
+	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hOffScreenDC, m_rtWindow.right, m_rtWindow.bottom);
 	m_hScreenBitmap = (HBITMAP)SelectObject(m_hOffScreenDC, m_hOffScreenBitmap);
 
 	// 배경색상 및 폰트 설정
-	COLORREF ColorBack = RGB(0xFF, 0xFF, 0xFF);
+	COLORREF ColorBack = RGB(0xDD, 0xDD, 0xFF);
 	m_hBrush = CreateSolidBrush(ColorBack);
 	m_hOldBrush = (HBRUSH)SelectObject(m_hOffScreenDC, m_hBrush);
-	m_hFont = CreateFont(12, 0, 0, FW_BOLD, 0, 0, 0, 0, HANGEUL_CHARSET, 3, 2, 1, VARIABLE_PITCH | FF_ROMAN, _T("돋움"));
+	m_hFont = CreateFont(14, 0, 0, FW_BOLD, 0, 0, 0, 0, HANGEUL_CHARSET, 3, 2, 1, VARIABLE_PITCH | FF_ROMAN, _T("돋움체"));
 	m_hOldFont = (HFONT)SelectObject(m_hOffScreenDC, m_hFont);
+
+	// 타이머 & 입력관련 클래스 초기화
+	m_Timer.Init();
+	m_Input.Init();
 
 	// 전역변수 설정
 	g_hScreenDC = m_hScreenDC;
 	g_hOffScreenDC = m_hOffScreenDC;
 
+	// 실제 게임로직 초기화이므로 가장 후순위 처리
 	Init();
+
 	return true;
 }
 
@@ -76,9 +76,9 @@ bool bgCore::GameFrame()
 	m_Timer.Frame();
 	m_Input.Frame();
 	PreFrame();
-	{
+	{ // 전처리
 		Frame();
-	}
+	} // 후처리
 	PostFrame();
 	return true;
 }
@@ -86,12 +86,11 @@ bool bgCore::GameFrame()
 bool bgCore::GameRender()
 {
 	PreRender();
-	{
+	{ // 전처리
 		Render();
 		m_Timer.Render();
 		m_Input.Render();
-		DrawDebug();
-	}
+	} // 후처리
 	PostRender();
 	return true;
 }

@@ -1,6 +1,10 @@
 #pragma once
 #include "bgBase.h"
 
+// 125 Byte = 1000밀리초(tick)의 비트열을 저장할 크기
+// 1000/8 = 1바이트(8bit) 분의 1초(1000ms)
+#define MSEC_PER_BYTE (1000/8)
+
 class bgTimer : public bgBase, public bgSingleton<bgTimer>
 {
 public:
@@ -21,5 +25,9 @@ public:
 public:
 	bgTimer();
 	virtual ~bgTimer();
+
+
+public:
+	unsigned char m_bitArrayTick[MSEC_PER_BYTE];
 };
 

@@ -45,7 +45,7 @@ bool bgTimer::Render()
 	fTime += m_fSPF;
 	if (fTime >= 1.0f)
 	{
-		_stprintf_s(m_csBuffer, L"FPS [%d], SPF [%.4f], Acc [%.4f]", m_iFPS, m_fSPF, m_fAccumulation);
+		_stprintf_s(m_csBuffer, L"FPS [%4d] SPF [%.4f] ACC [%.4f]", m_iFPS, m_fSPF, m_fAccumulation);
 		fTime = 0.0f;
 	}
 	SetBkMode(g_hOffScreenDC, TRANSPARENT); // 배경 투명하게
