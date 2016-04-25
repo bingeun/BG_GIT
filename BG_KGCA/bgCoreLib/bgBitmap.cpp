@@ -75,15 +75,15 @@ bool bgBitmap::Load(DWORD dwBitmap)
 HBITMAP bgBitmap::GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight, float fAngle)
 {
 	// 새로운 비트맵 생성 및 초기화
-	HDC		hScreenDC = CreateCompatibleDC(hdc);
-	HBITMAP	hBitmapResult = CreateCompatibleBitmap(hdc, iWidth, iHeight);
+	HDC		hScreenDC = CreateCompatibleDC(m_hOffScreenDC);
+	HBITMAP	hBitmapResult = CreateCompatibleBitmap(m_hOffScreenDC, iWidth, iHeight);
 	HBITMAP hBitmapOld = (HBITMAP)SelectObject(hScreenDC, hBitmapResult);
 
 	COLORREF rgbBack = RGB(0xFF, 0xFF, 0xFF);
 	HBRUSH   hBrushBack = CreateSolidBrush(rgbBack);
-	HBRUSH   hBrushOld = (HBRUSH)SelectObject(hdc, hBrushBack);
-	PatBlt(hdc, 0, 0, iWidth, iHeight, PATCOPY);
-	DeleteObject(SelectObject(hdc, hBrushOld));
+	HBRUSH   hBrushOld = (HBRUSH)SelectObject(hScreenDC, hBrushBack);
+	PatBlt(hScreenDC, 0, 0, iWidth, iHeight, PATCOPY);
+	DeleteObject(SelectObject(hScreenDC, hBrushOld));
 
 	// 회전
 	float fRadian = RadianToDegree(fAngle);

@@ -47,7 +47,7 @@ bool bgCore::GameInit()
 	// 전면 버퍼, 후면 버퍼 & 후면 비트맵 생성
 	m_hScreenDC = GetDC(m_hWnd);
 	m_hOffScreenDC = CreateCompatibleDC(m_hScreenDC);
-	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hOffScreenDC, m_rtWindow.right, m_rtWindow.bottom);
+	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hScreenDC, m_rtWindow.right, m_rtWindow.bottom);
 	m_hScreenBitmap = (HBITMAP)SelectObject(m_hOffScreenDC, m_hOffScreenBitmap);
 
 	// 배경색상 및 폰트 설정
