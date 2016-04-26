@@ -16,15 +16,15 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 	int iNumFrame = 0;
 
 	// 한 줄 읽고(_fgetts), 구문 분석하여 변수에 저장(_stscanf_s)
-	// #SPRITE N => 스프라이트 갯수
+	// #SPRITE(szString) 스프라이트수(iNumSprite), 그림파일(szFileName), 마스크파일(szFileNameMask)
 	_fgetts(pBuffer, _countof(pBuffer), fp);
-	_stscanf_s(pBuffer, _T("%s%d"), szString, _countof(szString), &iNumSprite);
+	_stscanf_s(pBuffer, _T("%s%d%s%s"), szString, _countof(szString), &iNumSprite, szFileName, _countof(szFileName), szFileNameMask, _countof(szFileNameMask));
 
 	for (int iSprite = 0; iSprite < iNumSprite; iSprite++)
 	{
-		// XXX.bmp XXX_mask.bmp rectXXX N => 그림파일 이름, 마스크파일 이름, 스프라이트 이름, 프레임 갯수
+		// 스프라이트이름(szString), 프레임수(iNumFrame)
 		_fgetts(pBuffer, _countof(pBuffer), fp);
-		_stscanf_s(pBuffer, _T("%s%s%s%d"), szFileName, _countof(szFileName), szFileNameMask, _countof(szFileNameMask), szString, _countof(szString), &iNumFrame);
+		_stscanf_s(pBuffer, _T("%s%d"), szString, _countof(szString), &iNumFrame);
 
 		bgBitmap* pBitmap = I_BitmapMgr.GetPtr(szFileName);
 
@@ -35,7 +35,7 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 			{
 				_fgetts(pBuffer, _countof(pBuffer), fp);
 				// 존재하는 이름이므로 값저장 생략
-				// _stscanf_s(pBuffer, _T("%d%d%d%d%d"), &iCount, &frame.rectSrc.left, &frame.rectSrc.top, &frame.rectSrc.right, &frame.rectSrc.bottom);
+				//_stscanf_s(pBuffer, _T("%d%f%d%d%d%d"), &iCount, &frame.fLifeTime, &frame.rectSrc.left, &frame.rectSrc.top, &frame.rectSrc.right, &frame.rectSrc.bottom);
 			}
 		}
 		// 같은 이름의 스프라이트가 없으면 m_List 에 추가
@@ -53,11 +53,10 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 				int iCount;
 				bgFrame frame;
 
-				// 프레임 카운트(iCount), BMP에서의 RECT(x,y,w,h)
+				// 프레임 카운트(iCount), 프레임 지속시간(fLifeTime), BMP에서의 RECT(x,y,w,h)
 				_fgetts(pBuffer, _countof(pBuffer), fp);
-				_stscanf_s(pBuffer, _T("%d%d%d%d%d"), &iCount, &frame.rectSrc.left, &frame.rectSrc.top, &frame.rectSrc.right, &frame.rectSrc.bottom);
+				_stscanf_s(pBuffer, _T("%d%f%d%d%d%d"), &iCount, &frame.fLifeTime, &frame.rectSrc.left, &frame.rectSrc.top, &frame.rectSrc.right, &frame.rectSrc.bottom);
 				frame.pBitmap = pBitmap;
-				frame.fLifeTime = DEFAULT_LIFETIME;
 
 				data->m_Frame.push_back(frame);
 			}

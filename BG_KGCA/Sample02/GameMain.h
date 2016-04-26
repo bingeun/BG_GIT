@@ -1,8 +1,8 @@
 #pragma once
 #include "bgCore.h"
-#include "bgGround.h"
 #include "bgHero.h"
 #include "bgEnemy.h"
+#include "bgGround.h"
 #include "bgSpriteMgr.h"
 
 class GameMain : public bgCore
@@ -13,6 +13,7 @@ public:
 	HBITMAP		m_hOffScreenBitmap;
 
 	bgHero		m_Hero;
+	bgGround	m_Ground;
 
 	float		m_fX;
 	float		m_fY;

@@ -8,6 +8,7 @@ bool GameMain::Init()
 	m_hOffScreenBitmap = CreateCompatibleBitmap(m_hScreenDC, 800, 600);
 	SelectObject(m_hOffScreenDC, m_hOffScreenBitmap);
 
+	m_Ground.Init();
 	m_Hero.Init();
 	return true;
 }
@@ -43,12 +44,14 @@ bool GameMain::Frame()
 		m_Hero.SpeedDown();
 	}
 
+	m_Ground.Frame();
 	m_Hero.Frame();
 	return true;
 }
 
 bool GameMain::Render()
 {
+	m_Ground.Render();
 	m_Hero.Render();
 	DrawDebug(L"Player Speed : %.2f", 2, 2 + 14 * 2);
 	return true;
@@ -56,6 +59,7 @@ bool GameMain::Render()
 
 bool GameMain::Release()
 {
+	m_Ground.Release();
 	m_Hero.Release();
 
 	ReleaseDC(m_hWnd, m_hOffScreenDC);

@@ -25,7 +25,8 @@ public:
 	bool	Load(TCHAR* pszName, TCHAR* pszNameMask = NULL);
 	bool	Load(DWORD dwBitmap);
 	HBITMAP	GetRotationBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight, float fAngle = 0.0f);
-	bool	Draw(HDC hdc, POINT pos, RECT rect, float fAngle = 0.0f, DWORD dwMode = SRCCOPY);
+	HBITMAP GetInvertBitmap(HDC hdc, RECT& rect, int iWidth, int iHeight, bool bInvertH = false, bool bInvertV = false);
+	bool	Draw(HDC hdc, POINT pos, RECT rect, bool bInvertH = false, bool bInvertV = false, float fAngle = 0.0f, DWORD dwMode = SRCCOPY);
 
 	bool	Init();
 	bool	Frame();

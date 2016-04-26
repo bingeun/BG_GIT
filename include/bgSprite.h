@@ -18,7 +18,6 @@ public:
 	wstring	m_szName;
 
 	float	m_fTimer;
-	float	m_fSecondPerRender;
 
 public:
 	bool	Init();

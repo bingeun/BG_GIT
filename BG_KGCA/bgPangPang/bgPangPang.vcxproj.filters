@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="GameMain.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="objGround.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="objHero.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="objGround.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="objHero.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySingle.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayMain.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayNetwork.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="GamePlay">
+      <UniqueIdentifier>{f033b2d1-9f7b-4609-9aa7-d7d3ad1e2eea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{23c9fbe9-1a8b-453c-bfca-68199398c0c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

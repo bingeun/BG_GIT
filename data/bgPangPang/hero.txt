@@ -1,0 +1,14 @@
+#SPRITE	5	../../data/bgPangPang/hero.bmp	../../data/bgPangPang/hero_mask.bmp
+HeroIdle	1
+0	100.0	0	0	45	60
+HeroMove	4
+0	0.2	0	60	45	60
+1	0.2	45	60	45	60
+2	0.2	90	60	45	60
+3	0.2	135	60	45	60
+HeroShot	1
+0	100.0	0	120	45	60
+HeroDie		1
+0	100.0	0	180	45	60
+HeroShield	1
+0	100.0	0	240	45	60

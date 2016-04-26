@@ -3,10 +3,10 @@
 #include "bgSys.h"
 #include "bgObject.h"
 
-class bgGround : public bgObject
+class objGround : public bgObject
 {
 public:
-	void	SetDirection(float fDirection) { m_fDirection = fDirection; }
+
 
 	bool	Init();
 	bool	Frame();
@@ -14,7 +14,7 @@ public:
 	bool	Release();
 
 public:
-	bgGround();
-	virtual ~bgGround();
+	objGround();
+	virtual ~objGround();
 };
 

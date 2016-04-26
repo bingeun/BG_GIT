@@ -1,8 +1,6 @@
 #pragma once
 #include "bgSpriteMgr.h"
 
-#define DEFAULT_SPEED (30.0f)
-
 class bgObject
 {
 public:
@@ -25,14 +23,10 @@ public:
 
 public:
 	void	SetDC(HDC hdc) { m_hOffScreenDC = hdc; }
-	void	SetObject(float fPosX, float fPosY, float fSpeed = DEFAULT_SPEED);
+	void	SetBitmap(TCHAR* pszBitmap);
+	void	SetSprite(TCHAR* pszSprite);
 
-	void	Left();
-	void	Right();
-	void	Up();
-	void	Down();
-	void	SpeedUp(float fSpeedUp = 1.0f);
-	void	SpeedDown(float fSpeedDown = 1.0f);
+	void	SetObject(float fPosX, float fPosY, float fSpeed);
 
 public:
 	virtual bool	Init();

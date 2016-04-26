@@ -1,0 +1,3 @@
+#SPRITE	1	../../data/bgPangPang/back2.bmp	NULL_MASK
+Back2		1
+0	100.0	0	0	800	600

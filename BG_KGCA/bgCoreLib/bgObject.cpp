@@ -1,53 +1,38 @@
 #include "bgObject.h"
 
 
+void bgObject::SetBitmap(TCHAR* pszBitmap)
+{
+	m_iBitmap = I_BitmapMgr.GetKey(pszBitmap);
+	m_pBitmap = I_BitmapMgr.GetPtr(m_iBitmap);
+	m_pBitmap->SetDC(m_hOffScreenDC);
+}
+
+void bgObject::SetSprite(TCHAR* pszSprite)
+{
+	m_iSprite = I_SpriteMgr.GetKey(pszSprite);
+	m_pSprite = I_SpriteMgr.GetPtr(m_iSprite);
+	m_pSprite->Init();
+}
+
 void bgObject::SetObject(float fPosX, float fPosY, float fSpeed)
 {
+	m_posObject.x = (int)(fPosX);
+	m_posObject.y = (int)(fPosY);
 	m_fPosX = fPosX;
 	m_fPosY = fPosY;
 	m_fSpeed = fSpeed;
 }
 
-void bgObject::Left()
-{
-	m_posObject.x -= (int)(g_fSPF * m_fSpeed);
-}
-
-void bgObject::Right()
-{
-	m_posObject.x += (int)(g_fSPF * m_fSpeed);
-}
-
-void bgObject::Up()
-{
-	m_posObject.y -= (int)(g_fSPF * m_fSpeed);
-}
-
-void bgObject::Down()
-{
-	m_posObject.y += (int)(g_fSPF * m_fSpeed);
-}
-
-void bgObject::SpeedUp(float fSpeedUp)
-{
-	m_fSpeed += fSpeedUp;
-}
-
-void bgObject::SpeedDown(float fSpeedDown)
-{
-	m_fSpeed -= fSpeedDown;
-}
-
 bool bgObject::Init()
 {
-	SetObject(800 / 2, 600 / 2, DEFAULT_SPEED);
+	SetObject(0, 0, 30.0f);
 	return true;
 }
 
 bool bgObject::Frame()
 {
-	m_posObject.x;
-	m_posObject.y;
+	m_pSprite->Frame();
 
 	return true;
 }
@@ -56,10 +41,6 @@ bool bgObject::Render()
 {
 	if (m_pSprite->m_iterFrame->pBitmap)
 		m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc);
-
-	m_pSprite->m_iterFrame++;
-	if (m_pSprite->m_iterFrame == m_pSprite->m_Frame.end())
-		m_pSprite->m_iterFrame = m_pSprite->m_Frame.begin();
 	return true;
 }
 

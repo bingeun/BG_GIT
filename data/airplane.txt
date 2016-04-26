@@ -1,8 +1,10 @@
-#SPRITE 5
+#SPRITE 6
 ../../data/airplane.bmp ../../data/airplane_mask.bmp rectHero 1
 0	133	1	42	60
 ../../data/airplane.bmp ../../data/airplane_mask.bmp rectEnemy 1
 0	1	62	44	75
+../../data/background.bmp ../../data/background_mask.bmp rectGround 1
+0	0	0	800	600
 ../../data/airplane.bmp ../../data/airplane_mask.bmp rectExplosion 12
 0	1	142	41	41
 1	43	142	38	43
