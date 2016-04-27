@@ -6,6 +6,7 @@
 
 #include "objHero.h"
 #include "objGround.h"
+#include "objBullet.h"
 
 #define BOARD_W		(50)
 #define BOARD_H		(34)
@@ -15,6 +16,8 @@
 #define CLIENT_H	(600)
 #define BOARD_X		(25)
 #define BOARD_Y		(25)
+#define HERO_W		(45)
+#define HERO_H		(60)
 // (CLIENT_W - ((BOARD_W * BLOCK_W) / 2))
 
 enum GAME_STATE
@@ -34,11 +37,15 @@ public:
 
 	objHero		m_Hero;
 	objGround	m_Ground;
-
-	float		m_fX;
-	float		m_fY;
+	vector<objBullet> m_Bullet;
+	vector<objBullet>::iterator m_iterBullet;
 
 	GAME_STATE	m_GameState;
+	BULLET_TYPE	m_BulletType;
+	int			m_CountBullet;
+
+public:
+	void	CreateBullet(BULLET_TYPE iType, float fX, float fY);
 
 public:
 	bool MainInit();

@@ -1,5 +1,6 @@
 #include "GameMain.h"
 
+
 bool GameMain::MainInit()
 {
 	m_Ground.SetBitmap(L"main.bmp");

@@ -1,26 +1,35 @@
 #include "objHero.h"
+#include "GameMain.h"
 
 
 void objHero::Left()
 {
-	m_posObject.x -= (int)(g_fSPF * m_fSpeed);
 	m_isLeft = true;
+	m_fPosX -= g_fSPF * m_fSpeed;
+	if ((int)m_fPosX < BOARD_X - (HERO_W / 5))
+		m_fPosX = (float)(BOARD_X - (HERO_W / 5));
+	m_posObject.x = (int)m_fPosX;
 }
 
 void objHero::Right()
 {
-	m_posObject.x += (int)(g_fSPF * m_fSpeed);
 	m_isLeft = false;
+	m_fPosX += g_fSPF * m_fSpeed;
+	if ((int)m_fPosX > CLIENT_W - BOARD_X - HERO_W + (HERO_W / 5))
+		m_fPosX = (float)(CLIENT_W - BOARD_X - HERO_W + (HERO_W / 5));
+	m_posObject.x = (int)m_fPosX;
 }
 
 void objHero::Up()
 {
 	m_posObject.y -= (int)(g_fSPF * m_fSpeed);
+	m_fPosY = (float)(m_posObject.y);
 }
 
 void objHero::Down()
 {
 	m_posObject.y += (int)(g_fSPF * m_fSpeed);
+	m_fPosY = (float)(m_posObject.y);
 }
 
 void objHero::SpeedUp(float fSpeedUp)

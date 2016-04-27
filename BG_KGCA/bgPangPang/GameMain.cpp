@@ -12,14 +12,11 @@ bool GameMain::Init()
 
 	I_SpriteMgr.Add(L"../../data/bgPangPang/object.txt");
 	I_SpriteMgr.Add(L"../../data/bgPangPang/item.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/bullet.txt");
 
 	m_Ground.Init();
 	m_Hero.Init();
 
 	m_GameState = STATE_MAIN;
-	//m_GameState = STATE_SINGLE;
-	//SingleInit();
 
 	return true;
 }
@@ -64,6 +61,7 @@ bool GameMain::Render()
 bool GameMain::Release()
 {
 	m_Ground.Release();
+	m_Bullet.clear();
 	m_Hero.Release();
 
 	ReleaseDC(m_hWnd, m_hOffScreenDC);

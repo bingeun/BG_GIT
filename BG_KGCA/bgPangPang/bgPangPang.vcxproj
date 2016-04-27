@@ -152,11 +152,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
+    <ClInclude Include="objBullet.h" />
     <ClInclude Include="objGround.h" />
     <ClInclude Include="objHero.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="objBullet.cpp" />
     <ClCompile Include="objGround.cpp" />
     <ClCompile Include="objHero.cpp" />
     <ClCompile Include="PlayMain.cpp" />

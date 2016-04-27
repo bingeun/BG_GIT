@@ -3,6 +3,8 @@
 #include "bgSys.h"
 #include "bgObject.h"
 
+#define HERO_SPEED (200.0f)
+
 class objHero : public bgObject
 {
 public:
