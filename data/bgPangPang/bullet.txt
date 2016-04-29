@@ -1,25 +1,25 @@
 #SPRITE	12	../../data/bgPangPang/bullet.bmp	../../data/bgPangPang/bullet_mask.bmp
-BulletSingle		1
+BulletSingle		1	0
 0	100.0	0	0	15	15
-BulletSingleMid		1
+BulletSingleMid		1	0
 0	100.0	0	15	15	15
-BulletDouble		1
+BulletDouble		1	0
 0	100.0	15	0	15	15
-BulletDoubleMid		1
+BulletDoubleMid		1	0
 0	100.0	15	15	15	15
-BulletFixed		1
+BulletFixed		1	0
 0	100.0	30	0	15	15
-BulletFixedMid		1
+BulletFixedMid		1	0
 0	100.0	30	15	15	15
-BulletGun		1
+BulletGun		1	0
 0	100.0	45	0	15	15
-BulletGunMid		1
+BulletGunMid		1	0
 0	100.0	45	15	15	15
-BulletGunLeft		1
+BulletGunLeft		1	0
 0	100.0	60	0	15	15
-BulletGunLeftMid	1
+BulletGunLeftMid	1	0
 0	100.0	60	15	15	15
-BulletGunRight		1
+BulletGunRight		1	0
 0	100.0	75	0	15	15
-BulletGunRightMid	1
+BulletGunRightMid	1	0
 0	100.0	75	15	15	15

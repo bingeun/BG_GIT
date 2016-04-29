@@ -6,20 +6,43 @@ bool bgSprite::Init()
 {
 	m_iterFrame = m_Frame.begin();
 	m_fTimer = g_fAccumulation;
+	m_iCountLoop = 0;
 	return true;
 }
 
 bool bgSprite::Frame()
 {
-	if (g_fAccumulation - m_fTimer >= m_iterFrame->fLifeTime)
+	if (m_iNumLoop < 0)
 	{
-		// 다음 프레임
-		m_iterFrame++;
-		if (m_iterFrame == m_Frame.end())
+		if (g_fAccumulation - m_fTimer >= m_iterFrame->fLifeTime)
 		{
-			m_iterFrame = m_Frame.begin();
+			m_fTimer = g_fAccumulation;
+			m_iterFrame++;
+			if (m_iterFrame == m_Frame.end())
+			{
+				m_iCountLoop++;
+				m_iterFrame = m_Frame.begin();
+			}
 		}
-		m_fTimer = g_fAccumulation;
+	}
+	else if (m_iCountLoop < m_iNumLoop)
+	{
+		if (g_fAccumulation - m_fTimer >= m_iterFrame->fLifeTime)
+		{
+			m_fTimer = g_fAccumulation;
+			m_iterFrame++;
+			if (m_iterFrame == m_Frame.end())
+			{
+				m_iCountLoop++;
+				if (m_iCountLoop <= m_iNumLoop)
+				{
+					m_iterFrame = m_Frame.end() - 1;
+					return false;
+				}
+				else
+					m_iterFrame = m_Frame.begin();
+			}
+		}
 	}
 	return true;
 }

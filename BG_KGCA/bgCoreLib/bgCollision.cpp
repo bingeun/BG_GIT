@@ -2,66 +2,131 @@
 
 
 
-bool RectInPoint(RECT & rectDest, POINT & posSrc)
+bool bgCollision::RectInPoint(RECT & rectDest, POINT & posSrc)
+{
+	if (posSrc.x >= rectDest.left && posSrc.x <= rectDest.right)
+	{
+		if (posSrc.y >= rectDest.top && posSrc.x <= rectDest.bottom)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool bgCollision::RectInPointWH(RECT& rectDest, POINT& posSrc)
+{
+	if (posSrc.x >= rectDest.left && posSrc.x <= rectDest.left + rectDest.right)
+	{
+		if (posSrc.y >= rectDest.top && posSrc.x <= rectDest.top + rectDest.bottom)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+bool bgCollision::RectInRect(RECT& rectDest, RECT& rectSrc)
+{
+	if (rectDest.right < rectSrc.left) return false;
+	if (rectSrc.right < rectDest.left) return false;
+	if (rectDest.bottom < rectSrc.top) return false;
+	if (rectSrc.bottom < rectDest.top) return false;
+
+	return true;
+}
+
+bool bgCollision::RectInRectWH(RECT& rectDest, RECT& rectSrc)
+{
+	RECT rtDest, rtSrc;
+
+	rtDest.left = rectDest.left;
+	rtDest.right = rectDest.left + rectDest.right;
+	rtDest.top = rectDest.top;
+	rtDest.bottom = rectDest.top + rectDest.bottom;
+
+	rtSrc.left = rectSrc.left;
+	rtSrc.right = rectSrc.left + rectSrc.right;
+	rtSrc.top = rectSrc.top;
+	rtSrc.bottom = rectSrc.top + rectSrc.bottom;
+
+	if (rtDest.right < rtSrc.left) return false;
+	if (rtSrc.right < rtDest.left) return false;
+	if (rtDest.bottom < rtSrc.top) return false;
+	if (rtSrc.bottom < rtDest.top) return false;
+
+	return true;
+}
+
+bool bgCollision::SphereInPoint(SPHERE& sphDest, POINT& posSrc)
+{
+	int iDisX = abs(sphDest.pos.x - posSrc.x);
+	int iDisY = abs(sphDest.pos.y - posSrc.y);
+	double iDistance = sqrt((iDisX*iDisX) + (iDisY*iDisY));
+
+	if (iDistance <= (double)sphDest.rad)
+		return true;
+
+	return false;
+}
+
+bool bgCollision::SphereInVLine(SPHERE& sphDest, POINT& posSrc, int iEndY)
+{
+	int iDisX, iDisY;
+	double iDistance;
+	// 라인의 X좌표가 원의 범위 내에 있을때
+	if ((posSrc.x <= sphDest.pos.x + sphDest.rad) && (posSrc.x >= sphDest.pos.x - sphDest.rad))
+	{
+		iDisX = abs(sphDest.pos.x - posSrc.x);
+
+		// 라인의 두 Y좌표가 원의 중심점보다 아래에 있을때
+		if(posSrc.y > sphDest.pos.y)
+		{
+			iDisY = abs(sphDest.pos.y - posSrc.y);
+		}
+		// 라인의 두 Y좌표가 원의 중심점보다 위에 있을때
+		else if (iEndY < sphDest.pos.y)
+		{
+			iDisY = abs(sphDest.pos.y - iEndY);
+		}
+		// 라인의 두 Y좌표 안에 원의 중심점이 있을때
+		else
+		{
+			iDisY = 0; // 원의 중심점의 Y좌표이므로 Y거리는 0
+		}
+
+		iDistance = sqrt((iDisX*iDisX) + (iDisY*iDisY));
+
+		if (iDistance <= (double)sphDest.rad)
+			return true;
+	}
+	return false;
+}
+
+bool bgCollision::SphereInHLine(SPHERE& sphDest, POINT& posSrc, int iEndX)
 {
 	return false;
 }
 
-bool RectInRect(RECT & rectDest, RECT & rectSrc)
+bool bgCollision::SphereInSphere(SPHERE& sphDest, SPHERE& sphSrc)
 {
-	//POINT posCenterDest, posCenterSrc;
-	//posCenterDest.x = (rectDest.right + rectDest.left) / 2;
-	//posCenterDest.y = (rectDest.top + rectDest.bottom) / 2;
-	//posCenterSrc.x = (rectSrc.right + rectSrc.left) / 2;
-	//posCenterSrc.y = (rectSrc.top + rectSrc.bottom) / 2;
+	int iDisX = abs(sphDest.pos.x - sphSrc.pos.x);
+	int iDisY = abs(sphDest.pos.y - sphSrc.pos.y);
+	double iDistance = sqrt((iDisX*iDisX) + (iDisY*iDisY));
 
-	//POINT RadiusS1, RadiusS2;
+	if (iDistance <= (double)(sphDest.rad + sphSrc.rad))
+		return true;
 
-	//if (Radius.x <= (RadiusS1.x + RadiusS2.x) && Radius.y <= (RadiusS1.y + RadiusS2.y))
-	//{
-	//	return true;
-	//}
 	return false;
 }
 
-bool SphereInSphere(bgSphere & sphDest, bgSphere & sphSrc)
+bool bgCollision::SphereInSphere(RECT& rectDest, RECT& rectSrc)
 {
-	//float fDistanceRadius = sphDest.radius + sphSrc.radius;
-	//float fX = abs(sphDest.pos.x - sphSrc.pos.x);
-	//float fY = abs(sphDest.pos.y - sphSrc.pos.y);
-	//float fDistanceCenter = sqrt((fX*fX) + (fY*fY));
-	//if (fDistanceCenter <= fDistanceRadius)
-	//{
-	//	return true;
-	//}
 	return false;
 }
 
-bool SphereInSphere(RECT & rectDest, RECT & rectSrc)
+bool bgCollision::SphereInSphereWH(RECT& rectDest, RECT& rectSrc)
 {
-	//POINT posCenterDest, posCenterSrc;
-	//posCenterDest.x = (rectDest.right + rectDest.left) / 2;
-	//posCenterDest.y = (rectDest.top + rectDest.bottom) / 2;
-	//posCenterSrc.x = (rectSrc.right + rectSrc.left) / 2;
-	//posCenterSrc.y = (rectSrc.top + rectSrc.bottom) / 2;
-
-	//float fS1, fS2;
-	//float fX, fY;
-	//fX = rectDest.right - rectDest.left;
-	//fY = rectDest.bottom - rectDest.top;
-	//fS1 = (fX > fY) ? fX : fY;
-	//fX = rectSrc.right - rectSrc.left;
-	//fY = rectSrc.bottom - rectSrc.top;
-	//fS2 = (fX > fY) ? fX : fY;
-
-	//float fDistanceRadius = fS1 + fS2;
-	//fX = abs(sphDest.pos.x - sphSrc.pos.x);
-	//fY = abs(sphDest.pos.y - sphSrc.pos.y);
-	//float fDistanceCenter = sqrt((fX*fX) + (fY*fY));
-	//if (fDistanceCenter <= fDistanceRadius)
-	//{
-	//	return true;
-	//}
 	return false;
 }
 

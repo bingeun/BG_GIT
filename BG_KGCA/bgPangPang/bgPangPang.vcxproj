@@ -79,6 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>../../output/bgPangPang/</OutDir>
+    <IntDir>../../output/bgPangPang/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -124,12 +126,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>../../include/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>../../lib/;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>bgCoreLib.lib;fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -153,14 +158,18 @@
   <ItemGroup>
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="objBullet.h" />
+    <ClInclude Include="objEffect.h" />
     <ClInclude Include="objGround.h" />
     <ClInclude Include="objHero.h" />
+    <ClInclude Include="objObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="objBullet.cpp" />
+    <ClCompile Include="objEffect.cpp" />
     <ClCompile Include="objGround.cpp" />
     <ClCompile Include="objHero.cpp" />
+    <ClCompile Include="objObject.cpp" />
     <ClCompile Include="PlayMain.cpp" />
     <ClCompile Include="PlayNetwork.cpp" />
     <ClCompile Include="PlaySingle.cpp" />

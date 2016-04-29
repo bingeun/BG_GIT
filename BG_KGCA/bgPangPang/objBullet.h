@@ -4,6 +4,7 @@
 #include "bgObject.h"
 
 #define BULLET_SPEED (400.0f)
+#define MAX_BULLET (256)
 
 enum BULLET_TYPE
 {
@@ -19,11 +20,11 @@ class objBullet : public bgObject
 {
 public:
 	BULLET_TYPE	m_BulletType;
-	float	m_fPosYHead; // BULLET_GUN Á¦¿Ü
+	bool	m_bLife;
+	float	m_fPosYHead;
+	float	m_fShotTime;
 
 public:
-	
-
 	bool	Init();
 	bool	Frame();
 	bool	Render();

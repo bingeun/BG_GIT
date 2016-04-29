@@ -13,6 +13,12 @@
     <ClInclude Include="objBullet.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="objObject.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="objEffect.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -34,6 +40,12 @@
       <Filter>GamePlay</Filter>
     </ClCompile>
     <ClCompile Include="objBullet.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="objObject.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="objEffect.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

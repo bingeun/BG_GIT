@@ -7,8 +7,10 @@ bool objBullet::Init()
 	//bgObject::Init();
 	SetDC(g_hOffScreenDC);
 
-	I_SpriteMgr.Add(L"../../data/bgPangPang/bullet.txt");
+	// 개수대로 로드하는 문제로 인해서 메인에서 로드...
+	// I_SpriteMgr.Add(L"../../data/bgPangPang/bullet.txt");
 	SetBitmap(L"bullet.bmp");
+	m_bLife = false;
 
 	return true;
 }
@@ -20,18 +22,42 @@ bool objBullet::Frame()
 	switch (m_BulletType)
 	{
 	case BULLET_GUN:
+		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		break;
 	case BULLET_GUN_LEFT:
+		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		m_fPosX -= g_fSPF * 70.0f;
+		m_posObject.x = (int)m_fPosX;
+		break;
 	case BULLET_GUN_RIGHT:
 		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		m_fPosX += g_fSPF * 70.0f;
+		m_posObject.x = (int)m_fPosX;
 		break;
 	default:
 		m_fPosYHead -= g_fSPF * BULLET_SPEED;
 		break;
 	}
 
+	// 게임 영역을 벗어나면...
 	if (m_fPosYHead < BOARD_Y)
 	{
-		m_fPosYHead = BOARD_Y;
+		// 고정형 작살은 고정되는 시간 처리...
+		if (m_BulletType == BULLET_FIXED)
+		{
+			if (g_fAccumulation - m_fShotTime < 3.0f)
+			{
+				m_fPosYHead = BOARD_Y;
+			}
+			else
+			{
+				m_bLife = false;
+			}
+		}
+		else
+		{
+			m_bLife = false;
+		}
 	}
 	return true;
 }

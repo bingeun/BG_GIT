@@ -11,6 +11,7 @@ bool objGround::Init()
 	I_SpriteMgr.Add(L"../../data/bgPangPang/back2.txt");
 	I_SpriteMgr.Add(L"../../data/bgPangPang/back3.txt");
 	I_SpriteMgr.Add(L"../../data/bgPangPang/back4.txt");
+	I_SpriteMgr.Add(L"../../data/bgPangPang/gameover.txt");
 	SetBitmap(L"main.bmp");
 	SetSprite(L"Main");
 

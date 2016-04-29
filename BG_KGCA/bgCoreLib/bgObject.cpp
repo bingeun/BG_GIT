@@ -33,7 +33,6 @@ bool bgObject::Init()
 bool bgObject::Frame()
 {
 	m_pSprite->Frame();
-
 	return true;
 }
 

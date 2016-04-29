@@ -14,6 +14,7 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 	TCHAR szFileNameMask[MAX_PATH] = { 0, };
 	int iNumSprite = 0;
 	int iNumFrame = 0;
+	int iNumLoop = 0;
 
 	// 한 줄 읽고(_fgetts), 구문 분석하여 변수에 저장(_stscanf_s)
 	// #SPRITE(szString) 스프라이트수(iNumSprite), 그림파일(szFileName), 마스크파일(szFileNameMask)
@@ -22,9 +23,9 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 
 	for (int iSprite = 0; iSprite < iNumSprite; iSprite++)
 	{
-		// 스프라이트이름(szString), 프레임수(iNumFrame)
+		// 스프라이트이름(szString), 프레임수(iNumFrame), 반복횟수(-x무한, 0반복없음, +x회반복)
 		_fgetts(pBuffer, _countof(pBuffer), fp);
-		_stscanf_s(pBuffer, _T("%s%d"), szString, _countof(szString), &iNumFrame);
+		_stscanf_s(pBuffer, _T("%s%d%d"), szString, _countof(szString), &iNumFrame, &iNumLoop);
 
 		bgBitmap* pBitmap = I_BitmapMgr.GetPtr(szFileName);
 
@@ -48,6 +49,7 @@ INT bgSpriteMgr::Add(TCHAR * pszName)
 			bgSprite* data = new bgSprite;
 			data->Init();
 			data->m_szName = szString;
+			data->m_iNumLoop = iNumLoop;
 			for (int iFrame = 0; iFrame < iNumFrame; iFrame++)
 			{
 				int iCount;
