@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <tchar.h>
 #include <math.h>
+#include <time.h>
 #include <map>
 #include <list>
 #include <vector>

@@ -605,6 +605,8 @@ void GameMain::FrameCollide()
 
 bool GameMain::SingleInit()
 {
+	srand(time(NULL));
+
 	m_Gameover.SetBitmap(L"gameover.bmp");
 	m_Gameover.SetSprite(L"Gameover");
 
@@ -648,7 +650,7 @@ bool GameMain::SingleFrame()
 {
 	if (m_CountLife < 1)
 	{
-		if (g_fAccumulation - m_TimeDeath > 10.0f)
+		if (g_fAccumulation - m_TimeDeath > 7.0f)
 		{
 			m_GameState = STATE_MAIN;
 			MainInit();
@@ -693,9 +695,14 @@ bool GameMain::SingleRender()
 	// 게임오버 전용 출력
 	if (m_CountLife < 1)
 	{
-		if (g_fAccumulation - m_TimeDeath <= 10.0f)
+		if (g_fAccumulation - m_TimeDeath <= 7.0f)
 		{
 			float timeGameover = g_fAccumulation - m_TimeDeath;
+			POINT posGameover = m_Gameover.m_posObject;
+			//posGameover.y = (int)(-15.0f + timeGameover*30.0f);
+			//if (m_Gameover.m_pSprite->m_iterFrame->pBitmap)
+			//	m_Gameover.m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posGameover, m_Gameover.m_pSprite->m_iterFrame->rectSrc);
+			m_Gameover.m_posObject.y = (int)(-140.0f + timeGameover*50.0f);
 			m_Gameover.Render();
 		}
 	}
