@@ -6,6 +6,9 @@ bool GameMain::MainInit()
 	m_Ground.SetBitmap(L"main.bmp");
 	m_Ground.SetSprite(L"Main");
 
+	m_Sound.Stop();
+	m_Sound.Play(m_arySound[SOUND_BGM_MAIN], true);
+
 	return true;
 }
 

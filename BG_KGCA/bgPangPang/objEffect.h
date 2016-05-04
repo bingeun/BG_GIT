@@ -18,6 +18,7 @@ public:
 	bool	m_bLife;
 
 public:
+
 	bool	Init();
 	bool	Frame();
 	bool	Render();

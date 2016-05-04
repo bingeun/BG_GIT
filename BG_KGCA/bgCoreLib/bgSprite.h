@@ -1,25 +1,16 @@
 #pragma once
 #include "bgStd.h"
 #include "bgSys.h"
-#include "bgBitmap.h"
+#include "bgFrame.h"
 
-struct bgFrame
-{
-	bgBitmap*	pBitmap;
-	RECT		rectSrc;
-	float		fLifeTime;
-};
 
 class bgSprite
 {
 public:
-	vector<bgFrame>	m_Frame;
-	vector<bgFrame>::iterator m_iterFrame;
-	wstring	m_szName;
-	int		m_iNumLoop;
-
+	bgFrame*	m_pFrame;
+	vector<FRAME>::iterator m_iterFrame;
 	int		m_iCountLoop;
-	float	m_fTimer;
+	float	m_timeFrame;
 
 public:
 	bool	Init();

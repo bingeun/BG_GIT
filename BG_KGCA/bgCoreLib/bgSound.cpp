@@ -12,9 +12,11 @@ bool bgSound::Frame()
 {
 	unsigned int total;
 	unsigned int current;
+
+	m_pSystem->update();
+
 	m_pSound[0]->getLength(&total, FMOD_TIMEUNIT_MS);
 	m_pChannel[0]->getPosition(&current, FMOD_TIMEUNIT_MS);
-
 	_stprintf_s(m_szBuffer, _T("[%02d:%02d:%02d] [%02d:%02d:%02d]"),
 		current / 1000 / 60, current / 1000 % 60, current / 10 % 60,
 		total / 1000 / 60, total / 1000 % 60, total / 10 % 60);
@@ -48,6 +50,14 @@ void bgSound::Stop(int iIndex)
 	m_pChannel[iIndex]->stop();
 }
 
+void bgSound::Stop()
+{
+	for (int iIndex = 0; iIndex < g_iMaxSound; iIndex++)
+	{
+		m_pChannel[iIndex]->stop();
+	}
+}
+
 void bgSound::Pause(int iIndex)
 {
 	bool paused;
@@ -64,6 +74,11 @@ void bgSound::Volume(int iIndex, float fVolume, bool bUp)
 	else
 		fCurrentVolume -= fVolume;
 	m_pChannel[iIndex]->setVolume(fCurrentVolume);
+}
+
+void bgSound::SetLoop(int iIndex)
+{
+	m_pSound[iIndex]->setMode(FMOD_LOOP_NORMAL);
 }
 
 void bgSound::Release()

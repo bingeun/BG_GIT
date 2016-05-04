@@ -3,7 +3,6 @@
 #include "bgBitmapMgr.h"
 
 #define I_SpriteMgr bgSpriteMgr::GetInstance()
-#define DEFAULT_LIFETIME (0.2f)
 
 class bgSpriteMgr : public bgSingleton<bgSpriteMgr>
 {

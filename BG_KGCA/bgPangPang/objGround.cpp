@@ -6,12 +6,12 @@ bool objGround::Init()
 	//bgObject::Init();
 	SetDC(g_hOffScreenDC);
 
-	I_SpriteMgr.Add(L"../../data/bgPangPang/main.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/back1.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/back2.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/back3.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/back4.txt");
-	I_SpriteMgr.Add(L"../../data/bgPangPang/gameover.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/main.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/back1.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/back2.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/back3.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/back4.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/gameover.txt");
 	SetBitmap(L"main.bmp");
 	SetSprite(L"Main");
 
@@ -31,8 +31,9 @@ bool objGround::Frame()
 bool objGround::Render()
 {
 	//bgObject::Render();
-	if (m_pSprite->m_iterFrame->pBitmap)
-		m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc);
+
+	if (m_Sprite.m_iterFrame->pBitmap)
+		m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc);
 	return true;
 }
 

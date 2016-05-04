@@ -1,5 +1,6 @@
 #pragma once
-#include "bgSpriteMgr.h"
+#include "bgFrameMgr.h"
+#include "bgSprite.h"
 
 class bgObject
 {
@@ -8,10 +9,11 @@ public:
 	HBRUSH	m_hBrush;
 	HBRUSH	m_hOldBrush;
 
-	bgSprite*	m_pSprite;
+	bgSprite	m_Sprite;
 	bgBitmap*	m_pBitmap;
-	INT		m_iSprite;
+	bgFrame*	m_pFrame;
 	INT		m_iBitmap;
+	INT		m_iFrame;
 	POINT	m_posObject;
 	RECT	m_rectObject;
 

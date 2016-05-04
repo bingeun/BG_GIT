@@ -1,7 +1,7 @@
 #pragma once
 #include "bgStd.h"
 #include "bgBitmapMgr.h"
-#include "bgSpriteMgr.h"
+#include "bgSprite.h"
 
 class bgShape
 {

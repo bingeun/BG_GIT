@@ -159,16 +159,20 @@
     <ClInclude Include="GameMain.h" />
     <ClInclude Include="objBullet.h" />
     <ClInclude Include="objEffect.h" />
+    <ClInclude Include="objFont.h" />
     <ClInclude Include="objGround.h" />
     <ClInclude Include="objHero.h" />
+    <ClInclude Include="objItem.h" />
     <ClInclude Include="objObject.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp" />
     <ClCompile Include="objBullet.cpp" />
     <ClCompile Include="objEffect.cpp" />
+    <ClCompile Include="objFont.cpp" />
     <ClCompile Include="objGround.cpp" />
     <ClCompile Include="objHero.cpp" />
+    <ClCompile Include="objItem.cpp" />
     <ClCompile Include="objObject.cpp" />
     <ClCompile Include="PlayMain.cpp" />
     <ClCompile Include="PlayNetwork.cpp" />

@@ -10,9 +10,11 @@ void bgObject::SetBitmap(TCHAR* pszBitmap)
 
 void bgObject::SetSprite(TCHAR* pszSprite)
 {
-	m_iSprite = I_SpriteMgr.GetKey(pszSprite);
-	m_pSprite = I_SpriteMgr.GetPtr(m_iSprite);
-	m_pSprite->Init();
+	m_Sprite.Init();
+	m_iFrame = I_FrameMgr.GetKey(pszSprite);
+	m_pFrame = I_FrameMgr.GetPtr(m_iFrame);
+	m_Sprite.m_pFrame = m_pFrame;
+	m_Sprite.m_iterFrame = m_Sprite.m_pFrame->m_vecFrame.begin();
 }
 
 void bgObject::SetObject(float fPosX, float fPosY, float fSpeed)
@@ -32,14 +34,14 @@ bool bgObject::Init()
 
 bool bgObject::Frame()
 {
-	m_pSprite->Frame();
+	m_Sprite.Frame();
 	return true;
 }
 
 bool bgObject::Render()
 {
-	if (m_pSprite->m_iterFrame->pBitmap)
-		m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc);
+	if (m_Sprite.m_iterFrame->pBitmap)
+		m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc);
 	return true;
 }
 

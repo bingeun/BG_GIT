@@ -59,7 +59,7 @@ bool objHero::Init()
 	//bgObject::Init();
 	SetDC(g_hOffScreenDC);
 
-	I_SpriteMgr.Add(L"../../data/bgPangPang/hero.txt");
+	I_FrameMgr.Add(L"../../data/bgPangPang/hero.txt");
 	SetBitmap(L"hero.bmp");
 	SetSprite(L"HeroIdle");
 
@@ -77,12 +77,12 @@ bool objHero::Frame()
 bool objHero::Render()
 {
 	//bgObject::Render();
-	if (m_pSprite->m_iterFrame->pBitmap)
+	if (m_Sprite.m_iterFrame->pBitmap)
 	{
 		// ★★★★★★★★★★★★★★★★ 회전, 반전 출력 디버깅 필요 ★★★★★★★★★★★★★★★★
-		//m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc, true, false);
-		//m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc, false, false, 90.0f, SRCCOPY);
-		m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc);
+		//m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc, true, false);
+		//m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc, false, false, 90.0f, SRCCOPY);
+		m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc);
 	}
 	return true;
 }

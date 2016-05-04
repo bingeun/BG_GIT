@@ -1,9 +1,9 @@
 #SPRITE	4	../../data/bgPangPang/menu.bmp	../../data/bgPangPang/menu_mask.bmp
 MenuPlay	1	0
-0	100.0	0	0	250	50
+0	100.0	0	0	0	0	250	50
 MenuPause	1	0
-0	100.0	0	50	250	50
+0	100.0	0	0	0	50	250	50
 MenuNetwork	1	0
-0	100.0	0	100	250	50
+0	100.0	0	0	0	100	250	50
 MenuExit	1	0
-0	100.0	0	150	250	50
+0	100.0	0	0	0	150	250	50

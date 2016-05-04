@@ -24,12 +24,13 @@
     <ClInclude Include="bgBitmapMgr.h" />
     <ClInclude Include="bgCollision.h" />
     <ClInclude Include="bgCore.h" />
+    <ClInclude Include="bgSprite.h" />
     <ClInclude Include="bgInput.h" />
     <ClInclude Include="bgObject.h" />
     <ClInclude Include="bgShape.h" />
     <ClInclude Include="bgSound.h" />
-    <ClInclude Include="bgSprite.h" />
-    <ClInclude Include="bgSpriteMgr.h" />
+    <ClInclude Include="bgFrame.h" />
+    <ClInclude Include="bgFrameMgr.h" />
     <ClInclude Include="bgStd.h" />
     <ClInclude Include="bgSys.h" />
     <ClInclude Include="bgTimer.h" />
@@ -48,12 +49,13 @@
     <ClCompile Include="bgBitmapMgr.cpp" />
     <ClCompile Include="bgCollision.cpp" />
     <ClCompile Include="bgCore.cpp" />
+    <ClCompile Include="bgSprite.cpp" />
     <ClCompile Include="bgInput.cpp" />
     <ClCompile Include="bgObject.cpp" />
     <ClCompile Include="bgShape.cpp" />
     <ClCompile Include="bgSound.cpp" />
-    <ClCompile Include="bgSprite.cpp" />
-    <ClCompile Include="bgSpriteMgr.cpp" />
+    <ClCompile Include="bgFrame.cpp" />
+    <ClCompile Include="bgFrameMgr.cpp" />
     <ClCompile Include="bgTimer.cpp" />
     <ClCompile Include="bgWindow.cpp" />
   </ItemGroup>

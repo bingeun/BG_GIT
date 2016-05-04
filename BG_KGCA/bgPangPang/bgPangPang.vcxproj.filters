@@ -19,6 +19,12 @@
     <ClInclude Include="objEffect.h">
       <Filter>Object</Filter>
     </ClInclude>
+    <ClInclude Include="objItem.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="objFont.h">
+      <Filter>Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameMain.cpp">
@@ -46,6 +52,12 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="objEffect.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="objItem.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="objFont.cpp">
       <Filter>Object</Filter>
     </ClCompile>
   </ItemGroup>

@@ -37,24 +37,6 @@
     <ClInclude Include="bgTimer.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="bgBitmap.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="bgBitmapMgr.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="bgShape.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="bgSprite.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="bgSpriteMgr.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="bgObject.h">
-      <Filter>Shape</Filter>
-    </ClInclude>
     <ClInclude Include="bgCollision.h">
       <Filter>Core</Filter>
     </ClInclude>
@@ -82,6 +64,27 @@
     <ClInclude Include="fmod_output.h">
       <Filter>FMOD</Filter>
     </ClInclude>
+    <ClInclude Include="bgBitmap.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgBitmapMgr.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgFrame.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgFrameMgr.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgObject.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgShape.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="bgSprite.h">
+      <Filter>Shape</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bgBase.cpp">
@@ -99,10 +102,25 @@
     <ClCompile Include="bgWindow.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="bgCollision.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="bgSound.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
     <ClCompile Include="bgBitmap.cpp">
       <Filter>Shape</Filter>
     </ClCompile>
     <ClCompile Include="bgBitmapMgr.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgFrame.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgFrameMgr.cpp">
+      <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgObject.cpp">
       <Filter>Shape</Filter>
     </ClCompile>
     <ClCompile Include="bgShape.cpp">
@@ -110,18 +128,6 @@
     </ClCompile>
     <ClCompile Include="bgSprite.cpp">
       <Filter>Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="bgSpriteMgr.cpp">
-      <Filter>Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="bgObject.cpp">
-      <Filter>Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="bgCollision.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="bgSound.cpp">
-      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

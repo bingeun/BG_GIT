@@ -8,7 +8,7 @@ bool objEffect::Init()
 	SetDC(g_hOffScreenDC);
 
 	// 개수대로 로드하는 문제로 인해서 메인에서 로드...
-	// I_SpriteMgr.Add(L"../../data/bgPangPang/effect.txt");
+	// I_FrameMgr.Add(L"../../data/bgPangPang/effect.txt");
 	SetBitmap(L"effect.bmp");
 	m_bLife = false;
 
@@ -18,7 +18,7 @@ bool objEffect::Init()
 bool objEffect::Frame()
 {
 	//bgObject::Frame();
-	if (!m_pSprite->Frame())
+	if (!m_Sprite.Frame())
 		m_bLife = false;
 
 	switch (m_EffectType)
@@ -40,9 +40,9 @@ bool objEffect::Render()
 {
 	//bgObject::Render();
 
-	if (m_pSprite->m_iterFrame->pBitmap)
+	if (m_Sprite.m_iterFrame->pBitmap)
 	{
-		m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_pSprite->m_iterFrame->rectSrc);
+		m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, m_posObject, m_Sprite.m_iterFrame->rectSrc);
 	}
 
 	switch (m_EffectType)

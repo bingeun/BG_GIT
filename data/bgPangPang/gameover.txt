@@ -1,3 +1,3 @@
 #SPRITE	1	../../data/bgPangPang/gameover.bmp	../../data/bgPangPang/gameover_mask.bmp
 Gameover	1	0
-0	100.0	0	0	800	150
+0	100.0	0	0	0	0	800	150

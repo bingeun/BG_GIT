@@ -8,7 +8,7 @@ bool objObject::Init()
 	SetDC(g_hOffScreenDC);
 
 	// 개수대로 로드하는 문제로 인해서 메인에서 로드...
-	// I_SpriteMgr.Add(L"../../data/bgPangPang/object.txt");
+	// I_FrameMgr.Add(L"../../data/bgPangPang/object.txt");
 	SetBitmap(L"object.bmp");
 	m_bLife = false;
 
@@ -30,7 +30,7 @@ bool objObject::Frame()
 		m_posObject.y = (int)m_fPosY;
 
 		// X좌표가 게임 Width를 벗어나면...
-		int iWidthObject = m_pSprite->m_iterFrame->rectSrc.right;
+		int iWidthObject = m_Sprite.m_iterFrame->rectSrc.right;
 		if (m_posObject.x < BOARD_X)
 		{
 			m_posObject.x = BOARD_X + 1;
@@ -43,7 +43,7 @@ bool objObject::Frame()
 		}
 
 		// Y좌표가 게임 Height를 벗어나면...
-		int iHeightObject = m_pSprite->m_iterFrame->rectSrc.bottom;
+		int iHeightObject = m_Sprite.m_iterFrame->rectSrc.bottom;
 		if (m_posObject.y < BOARD_Y)
 		{
 			m_posObject.y = BOARD_Y + 1;
@@ -65,7 +65,7 @@ bool objObject::Frame()
 		m_posObject.y = (int)m_fPosY;
 
 		// X좌표가 게임 Width를 벗어나면...
-		int iWidthObject = m_pSprite->m_iterFrame->rectSrc.right;
+		int iWidthObject = m_Sprite.m_iterFrame->rectSrc.right;
 		if (m_posObject.x < BOARD_X)
 		{
 			m_posObject.x = BOARD_X + 1;
@@ -78,7 +78,7 @@ bool objObject::Frame()
 		}
 
 		// Y좌표가 게임 Height를 벗어나면...
-		int iHeightObject = m_pSprite->m_iterFrame->rectSrc.bottom;
+		int iHeightObject = m_Sprite.m_iterFrame->rectSrc.bottom;
 		if (m_posObject.y < BOARD_Y)
 		{
 			m_posObject.y = BOARD_Y + 1;
@@ -103,7 +103,7 @@ bool objObject::Frame()
 bool objObject::Render()
 {
 	//bgObject::Render();
-	if (m_pSprite->m_iterFrame->pBitmap)
+	if (m_Sprite.m_iterFrame->pBitmap)
 	{
 		POINT posObject;
 		switch (m_ObjectType)
@@ -129,7 +129,7 @@ bool objObject::Render()
 			}
 			posObject.x = m_posObject.x;
 			posObject.y = m_posObject.y;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case OBJECT_POLYGON:
@@ -153,14 +153,14 @@ bool objObject::Render()
 			}
 			posObject.x = m_posObject.x;
 			posObject.y = m_posObject.y;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case OBJECT_BLOCK:
 			SetSprite(L"Block1");
 			posObject.x = m_posObject.x;
 			posObject.y = m_posObject.y;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posObject, m_Sprite.m_iterFrame->rectSrc);
 			break;
 		}
 	}

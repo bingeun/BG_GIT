@@ -8,7 +8,7 @@ bool objBullet::Init()
 	SetDC(g_hOffScreenDC);
 
 	// 개수대로 로드하는 문제로 인해서 메인에서 로드...
-	// I_SpriteMgr.Add(L"../../data/bgPangPang/bullet.txt");
+	// I_FrameMgr.Add(L"../../data/bgPangPang/bullet.txt");
 	SetBitmap(L"bullet.bmp");
 	m_bLife = false;
 
@@ -65,7 +65,7 @@ bool objBullet::Frame()
 bool objBullet::Render()
 {
 	//bgObject::Render();
-	if (m_pSprite->m_iterFrame->pBitmap)
+	if (m_Sprite.m_iterFrame->pBitmap)
 	{
 		POINT posBullet;
 		int y;
@@ -77,12 +77,12 @@ bool objBullet::Render()
 			{
 				posBullet.x = m_posObject.x;
 				posBullet.y = y;
-				m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+				m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			}
 			SetSprite(L"BulletSingle");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case BULLET_DOUBLE:
@@ -91,12 +91,12 @@ bool objBullet::Render()
 			{
 				posBullet.x = m_posObject.x;
 				posBullet.y = y;
-				m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+				m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			}
 			SetSprite(L"BulletDouble");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case BULLET_FIXED:
@@ -105,33 +105,33 @@ bool objBullet::Render()
 			{
 				posBullet.x = m_posObject.x;
 				posBullet.y = y;
-				m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+				m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			}
 			SetSprite(L"BulletFixed");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case BULLET_GUN:
 			SetSprite(L"BulletGun");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case BULLET_GUN_LEFT:
 			SetSprite(L"BulletGunLeft");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 
 		case BULLET_GUN_RIGHT:
 			SetSprite(L"BulletGunRight");
 			posBullet.x = m_posObject.x;
 			posBullet.y = (int)m_fPosYHead;
-			m_pSprite->m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_pSprite->m_iterFrame->rectSrc);
+			m_Sprite.m_iterFrame->pBitmap->Draw(m_hOffScreenDC, posBullet, m_Sprite.m_iterFrame->rectSrc);
 			break;
 		}
 	}
