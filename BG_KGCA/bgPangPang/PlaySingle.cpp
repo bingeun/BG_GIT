@@ -486,7 +486,7 @@ void GameMain::FrameTimer()
 	}
 
 	// 배경이 바뀌고 지난 시간 (사계절 or 레벨업?)
-	if (g_fAccumulation - m_TimeLevelUp > 120.0f)
+	if (g_fAccumulation - m_TimeLevelUp > 90.0f)
 	{
 		int iBack = (++m_iHeroLevel) % 4;
 		switch (iBack)

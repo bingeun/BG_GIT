@@ -25,7 +25,7 @@ bool objObject::Frame()
 	{
 		m_fPosX += g_fSPF * m_fPosA;
 		m_fPosY += g_fSPF * m_fPosB;
-		//m_fPosY = BOARD_Y + (BOARD_H*BLOCK_H) + (g_fSPF * m_fPosB); ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		m_fPosY = BOARD_Y + (BOARD_H*BLOCK_H) / 2 + (sin(g_fAccumulation) * 100.0f);
 		m_posObject.x = (int)m_fPosX;
 		m_posObject.y = (int)m_fPosY;
 
