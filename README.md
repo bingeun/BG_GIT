@@ -1,3 +1,1 @@
-first commit
-
-bingeun is zzang!
+KGCA bingeun@dreamwiz.com

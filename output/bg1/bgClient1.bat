@@ -1,1 +1,2 @@
-bgClient1.exe 10000 192.168.0.8
+cd client
+bgClient1.exe 10000 127.0.0.1

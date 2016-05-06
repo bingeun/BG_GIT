@@ -71,16 +71,16 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>../../output/bg1/</OutDir>
-    <IntDir>../../output/bg1/</IntDir>
+    <OutDir>../../output/bg1/server/</OutDir>
+    <IntDir>../../output/bg1/server/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>../../output/bg1/</OutDir>
-    <IntDir>../../output/bg1/</IntDir>
+    <OutDir>../../output/bg1/server/</OutDir>
+    <IntDir>../../output/bg1/server/</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>

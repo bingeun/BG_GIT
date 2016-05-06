@@ -1,1 +1,0 @@
-bgServer2.exe 10000
