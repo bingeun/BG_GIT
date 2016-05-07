@@ -101,7 +101,7 @@ void GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
 			// m_fPosA = X방향속도, m_fPosB = Y방향속도
 			// (부호 ? - : + ) 곱하기 (기본속도 + 랜덤속도);
 			m_Object[iEmpty].m_fPosA = ((rand() % 2) ? -1 : 1) * (OBJECT_SPEED + (rand() % 100));
-			m_Object[iEmpty].m_fPosB = -1.0f * abs(OBJECT_SPEED + (rand() % 100));
+			m_Object[iEmpty].m_fPosB = -0.5f * (OBJECT_SPEED / OBJECT_SPEED);
 
 			m_CountObject++;
 		}
@@ -458,7 +458,7 @@ void GameMain::FrameTimer()
 	{
 		int iPosXRand = rand() % (CLIENT_W - 300) + 100;
 		int iSize = rand() % 5 + 1;
-		CreateObject(OBJECT_BALL, (float)iPosXRand, (float)BOARD_Y, iSize);
+		CreateObject(OBJECT_BALL, (float)iPosXRand, (float)(rand() % (BOARD_H*BLOCK_H / 2)) + BOARD_Y, iSize);
 
 		m_TimeMakeBall = g_fAccumulation;
 	}
@@ -581,7 +581,7 @@ void GameMain::FrameCollide()
 								m_CountObject--;
 
 								///////////////////////////////////////////////////////////////////////////////////////////
-								CreateEffect(EFFECT_FLOWER, m_Object[iObject].m_fPosX, m_Object[iObject].m_fPosY);
+								CreateEffect(EFFECT_FLOWER, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
 								iObject = MAX_OBJECT; // 다른 오브젝트와 충돌검사하지 않도록 루프 강제탈출
 								break;
 							}
@@ -636,7 +636,7 @@ void GameMain::FrameCollide()
 								m_CountObject--;
 
 								///////////////////////////////////////////////////////////////////////////////////////////
-								CreateEffect(EFFECT_FLOWER, m_Object[iObject].m_fPosX, m_Object[iObject].m_fPosY);
+								CreateEffect(EFFECT_FLOWER, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
 								iObject = MAX_OBJECT; // 다른 오브젝트와 충돌검사하지 않도록 루프 강제탈출
 								break;
 							}
