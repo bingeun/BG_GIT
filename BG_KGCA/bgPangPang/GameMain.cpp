@@ -25,18 +25,22 @@ bool GameMain::Init()
 	m_Sound.SetLoop(SOUND_BGM_BACK3);
 	m_Sound.SetLoop(SOUND_BGM_BACK4);
 
-	I_FrameMgr.Add(L"../../data/bgPangPang/menu.txt");
-
 	// 개수대로 로드하는 문제로 인해서 메인에서 로드...
 	I_FrameMgr.Add(L"../../data/bgPangPang/object.txt");
 	I_FrameMgr.Add(L"../../data/bgPangPang/bullet.txt");
 	I_FrameMgr.Add(L"../../data/bgPangPang/effect.txt");
 	I_FrameMgr.Add(L"../../data/bgPangPang/item.txt");
 
+	I_FrameMgr.Add(L"../../data/bgPangPang/menu.txt");
+
 	m_Gameover.Init();
 	m_Ground.Init();
 	m_Hero.Init();
 	m_Font.Init();
+	m_UI.Init();
+	m_UI.SetDC(g_hOffScreenDC);
+	m_UI.SetBitmap(L"item.bmp");
+	m_UI.SetSprite(L"Life");
 
 	int i;
 	for (i = 0; i < MAX_BULLET; i++)
@@ -98,6 +102,7 @@ bool GameMain::Release()
 	m_Ground.Release();
 	m_Hero.Release();
 	m_Font.Release();
+	m_UI.Release();
 
 	int i;
 	for (i = 0; i < MAX_BULLET; i++)

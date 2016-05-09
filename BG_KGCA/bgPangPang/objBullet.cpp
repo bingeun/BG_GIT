@@ -22,15 +22,15 @@ bool objBullet::Frame()
 	switch (m_BulletType)
 	{
 	case BULLET_GUN:
-		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		m_fPosYHead -= g_fSPF * BULLET_SPEED * 1.8f;
 		break;
 	case BULLET_GUN_LEFT:
-		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		m_fPosYHead -= g_fSPF * BULLET_SPEED * 1.8f;
 		m_fPosX -= g_fSPF * 70.0f;
 		m_posObject.x = (int)m_fPosX;
 		break;
 	case BULLET_GUN_RIGHT:
-		m_fPosYHead -= g_fSPF * BULLET_SPEED * 2;
+		m_fPosYHead -= g_fSPF * BULLET_SPEED * 1.8f;
 		m_fPosX += g_fSPF * 70.0f;
 		m_posObject.x = (int)m_fPosX;
 		break;

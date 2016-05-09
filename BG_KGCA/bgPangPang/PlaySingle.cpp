@@ -52,6 +52,8 @@ int GameMain::CreateItem(ITEM_TYPE iType, float fX, float fY)
 		break;
 	}
 	m_Item[iEmpty].SetObject(fX, fY, 0.0f);
+	m_Item[iEmpty].m_ItemType = iType;
+	m_Item[iEmpty].m_fLifeTime = g_fAccumulation;
 
 	m_CountItem++;
 	return iEmpty;
@@ -188,7 +190,7 @@ void GameMain::CreateBullet(BULLET_TYPE iType, float fX, float fY)
 		break;
 
 	case BULLET_DOUBLE:
-		if (m_CountBullet < 2)
+		if (m_CountBullet < m_iDoubleBullet)
 		{
 			// 비어있는 총알 오브젝트 배열위치 찾기
 			int iEmpty;
@@ -238,7 +240,7 @@ void GameMain::CreateBullet(BULLET_TYPE iType, float fX, float fY)
 		break;
 
 	case BULLET_GUN:
-		if (m_CountBullet < 3 * (3)) // 1회 발사에 3개씩 총 (3)회 발사 가능
+		if (m_CountBullet < m_iGunBullet) // 1회 발사에 3개씩 총 (3)회 발사 가능
 		{
 			// 비어있는 총알 오브젝트 배열위치 찾기
 			int iEmpty;
@@ -375,20 +377,25 @@ void GameMain::FrameKey()
 		break;
 	}
 
-	// 왼쪽Ctrl - 무기 발사
-	if (m_Input.KeyCheck(VK_LCONTROL) == KEY_PUSH)
+	// 무기 발사
+	if (m_Input.KeyCheck(VK_LCONTROL) == KEY_PUSH) // VK_LCONTROL
+	{
+		CreateBullet(m_BulletType, (float)m_Hero.m_posObject.x, (float)m_Hero.m_posObject.y);
+	}
+	// 무기 발사2 - 테스트용
+	if (m_Input.KeyCheck('Z') == KEY_HOLD) // VK_LCONTROL
 	{
 		CreateBullet(m_BulletType, (float)m_Hero.m_posObject.x, (float)m_Hero.m_posObject.y);
 	}
 
 	// Up - 이동속도 증가
-	if (m_Input.KeyCheck(VK_UP) == KEY_HOLD)
+	if (m_Input.KeyCheck('Q') == KEY_HOLD)
 	{
 		m_Hero.SpeedUp();
 	}
 
 	// Down - 이동속도 감소
-	if (m_Input.KeyCheck(VK_DOWN) == KEY_HOLD)
+	if (m_Input.KeyCheck('A') == KEY_HOLD)
 	{
 		m_Hero.SpeedDown();
 	}
@@ -410,6 +417,29 @@ void GameMain::FrameKey()
 	{
 		m_BulletType = BULLET_GUN;
 	}
+
+	// F5 - 볼 리젠 빠르게
+	if (m_Input.KeyCheck(VK_F5) == KEY_PUSH)
+	{
+		m_fRegenBall = REGENTIME_BALL_FAST;
+	}
+	// F6 - 작살 동시발사 가능개수 증가
+	if (m_Input.KeyCheck(VK_F6) == KEY_PUSH)
+	{
+		m_iDoubleBullet = DOUBLE_BULLET_MAX;
+	}
+	// F8 - 총알 동시발사 가능개수 증가
+	if (m_Input.KeyCheck(VK_F8) == KEY_PUSH)
+	{
+		m_iGunBullet = GUN_BULLET_MAX;
+	}
+	// F9 - 볼 리젠, 무기 동시발사 가능개수 원래대로
+	if (m_Input.KeyCheck(VK_F9) == KEY_PUSH)
+	{
+		m_iDoubleBullet = DEFAULT_DOUBLE_BULLET;
+		m_iGunBullet = DEFAULT_GUN_BULLET;
+		m_fRegenBall = REGENTIME_BALL;
+	}
 }
 
 void GameMain::FrameObject()
@@ -426,13 +456,6 @@ void GameMain::FrameObject()
 				m_CountBullet--;
 		}
 	}
-	for (i = 0; i < MAX_OBJECT; i++)
-	{
-		if (m_Object[i].m_bLife)
-		{
-			m_Object[i].Frame();
-		}
-	}
 	for (i = 0; i < MAX_EFFECT; i++)
 	{
 		if (m_Effect[i].m_bLife)
@@ -441,6 +464,26 @@ void GameMain::FrameObject()
 			// m_bLife 가 false 인 경우 (이펙트가 사라지면...)
 			if (!m_Effect[i].m_bLife)
 				m_CountEffect--;
+		}
+	}
+	for (i = 0; i < MAX_ITEM; i++)
+	{
+		if (m_Item[i].m_bLife)
+		{
+			m_Item[i].Frame();
+			//// m_bLife 가 false 인 경우 (아이템이 사라지면...)
+			//if (!m_Item[i].m_bLife)
+			//	m_CountItem--;
+		}
+	}
+	if (g_fAccumulation - m_TimeClockAdd > CLOCK_ADDTIME)
+	{
+		for (int i = 0; i < MAX_OBJECT; i++)
+		{
+			if (m_Object[i].m_bLife)
+			{
+				m_Object[i].Frame();
+			}
 		}
 	}
 	m_Hero.Frame();
@@ -454,20 +497,28 @@ void GameMain::FrameTimer()
 	}
 
 	// 가장 최근에 볼이 생성되고 흐른시간
-	if (g_fAccumulation - m_TimeMakeBall > REGENTIME_BALL)
+	if (g_fAccumulation - m_TimeMakeBall > m_fRegenBall)
 	{
 		int iPosXRand = rand() % (CLIENT_W - 300) + 100;
-		int iSize = rand() % 5 + 1;
+		int iSize = rand() % 100;
+		if (iSize < 70) iSize = 2; // 70%
+		else if (iSize < 90) iSize = 3; // 20%
+		else if (iSize < 98) iSize = 4; // 8%
+		else iSize = 5; // 2%
 		CreateObject(OBJECT_BALL, (float)iPosXRand, (float)(rand() % (BOARD_H*BLOCK_H / 2)) + BOARD_Y, iSize);
 
 		m_TimeMakeBall = g_fAccumulation;
 	}
 
 	// 가장 최근에 다각형이 생성되고 흐른시간
-	if (g_fAccumulation - m_TimeMakePolygon > REGENTIME_POLYGON)
+	if (g_fAccumulation - m_TimeMakePolygon > m_fRegenPolygon)
 	{
 		int iPosXRand = rand() % (CLIENT_W - 300) + 100;
-		int iSize = rand() % 5 + 1;
+		int iSize = rand() % 100;
+		if (iSize < 70) iSize = 2; // 70%
+		else if (iSize < 90) iSize = 3; // 20%
+		else if (iSize < 98) iSize = 4; // 8%
+		else iSize = 5; // 2%
 		CreateObject(OBJECT_POLYGON, (float)iPosXRand, (float)BOARD_Y, iSize);
 
 		m_TimeMakePolygon = g_fAccumulation;
@@ -480,9 +531,10 @@ void GameMain::FrameTimer()
 	}
 
 	// 가장 최근에 시계 아이템이 생성되고 흐른시간
-	if (g_fAccumulation - m_TimeMakeClock > 10.0f)
+	if (g_fAccumulation - m_TimeMakeClock > m_fRegenClock)
 	{
 		m_TimeMakeClock = g_fAccumulation;
+		m_fRegenBall *= 0.9f;
 	}
 
 	// 배경이 바뀌고 지난 시간 (사계절 or 레벨업?)
@@ -519,16 +571,26 @@ void GameMain::FrameTimer()
 
 		m_TimeLevelUp = g_fAccumulation;
 	}
+
+	// 일정 점수마다 생명(하트) 아이템 드롭
+	if (m_iScore - m_iCountScore >= LIFEBONUS_SCORE)
+	{
+		int iPosXRand = rand() % (CLIENT_W - 300) + 100;
+		int iItem = CreateItem(ITEM_LIFE, iPosXRand, BOARD_Y);
+		m_Item[iItem].m_fPosB = ITEM_DROP_SPEED;
+		m_iCountScore = m_iScore;
+	}
 }
 
 void GameMain::FrameCollide()
 {
-	SPHERE sphObject, sphHero;
+	SPHERE sphObject, sphHero, sphItem;
 	RECT rectObject;
 	POINT posBullet;
 
 	int iObject = 0;
 	int iBullet = 0;
+	int iItem = 0;
 
 	// 화면에 존재하는 모든 무기 루프
 	for (iBullet = 0; iBullet < MAX_BULLET; iBullet++)
@@ -579,9 +641,41 @@ void GameMain::FrameCollide()
 								m_CountBullet--;
 								m_Object[iObject].m_bLife = false;
 								m_CountObject--;
+								m_iCountBurst++;
 
-								///////////////////////////////////////////////////////////////////////////////////////////
+								// 이펙트
 								CreateEffect(EFFECT_FLOWER, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
+								// 시계 아이템 생성
+								if (g_fAccumulation - m_TimeClock > m_fRegenClock)
+								{
+									iItem = CreateItem(ITEM_CLOCK, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
+									m_Item[iItem].m_fPosB = ITEM_DROP_SPEED;
+									m_TimeClock = g_fAccumulation;
+								}
+								// 무기 아이템 생성
+								if (g_fAccumulation - m_TimeBullet > m_fRegenBullet)
+								{
+									switch (rand() % 4)
+									{
+									case 0: iItem = CreateItem(ITEM_WEAPON_SINGLE, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 1: iItem = CreateItem(ITEM_WEAPON_DOUBLE, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 2: iItem = CreateItem(ITEM_WEAPON_FIXED, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 3: iItem = CreateItem(ITEM_WEAPON_GUN, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									}
+									m_TimeBullet = g_fAccumulation;
+								}
+								// 음식 아이템 생성
+								if (m_iCountBurst > REGENCOUNT_BURST)
+								{
+									switch (rand() % 4)
+									{
+									case 0: iItem = CreateItem(ITEM_FOOD1, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 1: iItem = CreateItem(ITEM_FOOD2, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 2: iItem = CreateItem(ITEM_FOOD3, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 3: iItem = CreateItem(ITEM_FOOD4, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									}
+									m_iCountBurst = 0;
+								}
 								iObject = MAX_OBJECT; // 다른 오브젝트와 충돌검사하지 않도록 루프 강제탈출
 								break;
 							}
@@ -634,9 +728,41 @@ void GameMain::FrameCollide()
 								m_CountBullet--;
 								m_Object[iObject].m_bLife = false;
 								m_CountObject--;
+								m_iCountBurst++;
 
-								///////////////////////////////////////////////////////////////////////////////////////////
+								// 이펙트
 								CreateEffect(EFFECT_FLOWER, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
+								// 시계 아이템 생성
+								if (g_fAccumulation - m_TimeClock > m_fRegenClock)
+								{
+									iItem = CreateItem(ITEM_CLOCK, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY);
+									m_Item[iItem].m_fPosB = ITEM_DROP_SPEED;
+									m_TimeClock = g_fAccumulation;
+								}
+								// 무기 아이템 생성
+								if (g_fAccumulation - m_TimeBullet > m_fRegenBullet)
+								{
+									switch (rand() % 4)
+									{
+									case 0: iItem = CreateItem(ITEM_WEAPON_SINGLE, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 1: iItem = CreateItem(ITEM_WEAPON_DOUBLE, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 2: iItem = CreateItem(ITEM_WEAPON_FIXED, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									case 3: iItem = CreateItem(ITEM_WEAPON_GUN, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY); break;
+									}
+									m_TimeBullet = g_fAccumulation;
+								}
+								// 음식 아이템 생성
+								if (m_iCountBurst > REGENCOUNT_BURST)
+								{
+									switch (rand() % 4)
+									{
+									case 0: iItem = CreateItem(ITEM_FOOD1, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 1: iItem = CreateItem(ITEM_FOOD2, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 2: iItem = CreateItem(ITEM_FOOD3, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									case 3: iItem = CreateItem(ITEM_FOOD4, m_Bullet[iBullet].m_fPosX, m_Object[iObject].m_fPosY + ITEM_H); break;
+									}
+									m_iCountBurst = 0;
+								}
 								iObject = MAX_OBJECT; // 다른 오브젝트와 충돌검사하지 않도록 루프 강제탈출
 								break;
 							}
@@ -652,15 +778,80 @@ void GameMain::FrameCollide()
 		}
 	} // 화면에 존재하는 모든 무기 루프 =====
 
-	// 주인공의 보호상태이면 충돌 검사하지 않고 리턴
-	if (g_fAccumulation - m_TimeDeath < SAFE_DEATHTIME)
-		return;
-
-	// 주인공과 오브젝트의 충돌 검사
+	// 주인공과 아이템의 충돌여부 검사 (먹었는지..)
 	// 주인공의 중심점 x좌표(23), y좌표(38), 반지름(20)
 	sphHero.pos.x = m_Hero.m_posObject.x + 23;
 	sphHero.pos.y = m_Hero.m_posObject.y + 38;
 	sphHero.rad = 20;
+	for (iItem = 0; iItem < MAX_ITEM; iItem++)
+	{
+		if (m_Item[iItem].m_bLife)
+		{
+			sphItem.rad = m_Item[iItem].m_Sprite.m_iterFrame->rectSrc.bottom / 2.0f;
+			sphItem.pos.x = m_Item[iItem].m_posObject.x + (int)sphItem.rad;
+			sphItem.pos.y = m_Item[iItem].m_posObject.y + (int)sphItem.rad;
+			if (m_Collision.SphereInSphere(sphHero, sphItem))
+			{
+				switch (m_Item[iItem].m_ItemType)
+				{
+					// 음식 아이템 - 점수
+				case ITEM_FOOD4:
+					m_iScore += 5000; // 누적 10000
+				case ITEM_FOOD3:
+					m_iScore += 3000; // 누적 5000
+				case ITEM_FOOD2:
+					m_iScore += 1000; // 누적 2000
+				case ITEM_FOOD1:
+					m_iScore += 1000; // 누적 1000
+					break;
+
+					// 무기 아이템 - 무기 변경
+				case ITEM_WEAPON_SINGLE:
+					m_BulletType = BULLET_SINGLE;
+					break;
+				case ITEM_WEAPON_DOUBLE:
+					m_BulletType = BULLET_DOUBLE;
+					break;
+				case ITEM_WEAPON_FIXED:
+					m_BulletType = BULLET_FIXED;
+					break;
+				case ITEM_WEAPON_GUN:
+					m_BulletType = BULLET_GUN;
+					break;
+
+					// 기타 아이템
+				case ITEM_LIFE: // 생명 증가
+					if (m_CountLife < MAX_LIFE)
+					{
+						m_Sound.Play(m_arySound[SOUND_ITEM_EAT], true);
+						m_CountLife++;
+					}
+					break;
+				case ITEM_CLOCK: // 일시 멈춤
+					m_TimeClockAdd = g_fAccumulation;
+					break;
+				case ITEM_SHIELD: // 보호막
+					m_TimeShield = g_fAccumulation;
+					break;
+				}
+
+				// 아이템 먹었으므로 사라짐 처리
+				m_Item[iItem].m_bLife = false;
+				m_CountItem--;
+				iItem = MAX_ITEM;
+				break;
+			}
+		}
+	}
+
+	// 주인공이 보호상태이면 충돌 검사하지 않고 리턴
+	if (g_fAccumulation - m_TimeDeath < SAFE_DEATHTIME)
+		return;
+	// 시계 아이템을 먹은상태이면 충돌 검사하지 않고 리턴
+	if(g_fAccumulation - m_TimeClockAdd < CLOCK_ADDTIME)
+		return;
+
+	// 주인공과 오브젝트의 충돌 검사
 	for (iObject = 0; iObject < MAX_OBJECT; iObject++)
 	{
 		if (m_Object[iObject].m_bLife)
@@ -697,7 +888,7 @@ void GameMain::FrameCollide()
 
 					m_TimeDeath = g_fAccumulation;
 					m_CountLife--;
-					m_Item[m_aryLife[m_CountLife]].m_bLife = false;
+					m_iCountBurst++;
 
 					if (m_CountLife < 1)
 					{
@@ -756,19 +947,28 @@ bool GameMain::SingleInit()
 	for (i = 0; i < MAX_ITEM; i++)
 		m_Item[i].m_bLife = false;
 
-	for (i = 0; i < MAX_LIFE; i++)
-		m_aryLife[i] = 0;
-
 	m_TimeStartGame = g_fAccumulation;
-	m_TimeMakeBall = g_fAccumulation;
-	m_TimeMakePolygon = g_fAccumulation;
+	m_TimeMakeBall = g_fAccumulation - REGENTIME_BALL / 1.2f;
+	m_TimeMakePolygon = g_fAccumulation - REGENTIME_POLYGON / 1.2f;
 	m_TimeMakeBlock = g_fAccumulation;
 	m_TimeMakeClock = g_fAccumulation;
 	m_TimeDeath = g_fAccumulation - SAFE_DEATHTIME;
+	m_TimeClock = g_fAccumulation;
+	m_TimeShield = g_fAccumulation;
+	m_TimeBullet = g_fAccumulation;
+	m_TimeClockAdd = g_fAccumulation - CLOCK_ADDTIME;
 
+	m_iCountBurst = 0;
+	m_iCountScore = 0;
 	m_CountLife = DEFAULT_LIFE;
-	for (i = 0; i < DEFAULT_LIFE; i++)
-		m_aryLife[i] = CreateItem(ITEM_LIFE, LIFE_X + (float)(i*ITEM_W), LIFE_Y);
+
+	m_fRegenBall = REGENTIME_BALL;
+	m_fRegenPolygon = REGENTIME_POLYGON;
+	m_fRegenClock = REGENTIME_CLOCK;
+	m_fRegenBlock = REGENTIME_BLOCK;
+	m_fRegenBullet = REGENTIME_BULLET;
+	m_iGunBullet = DEFAULT_GUN_BULLET;
+	m_iDoubleBullet = DEFAULT_DOUBLE_BULLET;
 
 	m_Sound.Stop();
 	m_Sound.Play(m_arySound[SOUND_BGM_BACK1], true);
@@ -780,17 +980,28 @@ bool GameMain::SingleInit()
 
 bool GameMain::SingleFrame()
 {
+	// 게임 오버
 	if (m_CountLife < 1)
 	{
+		// 화면 보여주는 시간...
 		if (g_fAccumulation - m_TimeDeath > 7.0f)
 		{
 			m_GameState = STATE_MAIN;
+			m_Sound.Stop();
 			MainInit();
 			return true;
 		}
 		else
 		{
-			float timeGameover = g_fAccumulation - m_TimeDeath;
+			// ESC - 메인씬으로 이동
+			if (m_Input.KeyCheck(VK_ESCAPE) == KEY_PUSH)
+			{
+				m_GameState = STATE_MAIN;
+				m_Sound.Stop();
+				MainInit();
+				return true;
+			}
+
 		}
 	}
 	else
@@ -798,6 +1009,7 @@ bool GameMain::SingleFrame()
 		FrameKey();
 		FrameCollide();
 	}
+
 	FrameObject();
 	FrameTimer();
 
@@ -838,7 +1050,7 @@ bool GameMain::SingleRender()
 		if (m_Effect[i].m_bLife)
 			m_Effect[i].Render();
 	}
-
+	
 	// ================ 주인공 출력 ==================
 	// 게임오버시
 	if (m_CountLife < 1)
@@ -866,8 +1078,20 @@ bool GameMain::SingleRender()
 	else
 		m_Hero.Render();
 
+	// ======================== UI ========================
+	// 생명 (하트)
+	m_UI.SetBitmap(L"item.bmp");
+	m_UI.SetSprite(L"Life");
+	for (i = 0; i < m_CountLife; i++)
+	{
+		m_UI.m_posObject.x = BOARD_X + i*ITEM_W;
+		m_UI.m_posObject.y = BOARD_Y + (BOARD_H + 1)*BLOCK_H;
+		m_UI.Render();
+	}
+
 	// 점수
 	m_Font.PrintNumber(m_iScore, SCORE_X, SCORE_Y);
+
 
 #ifdef _DEBUG
 	//TCHAR pszBuffer[MAX_PATH] = L"Print Debug String...";

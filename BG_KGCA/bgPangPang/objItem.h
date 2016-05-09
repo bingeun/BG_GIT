@@ -10,6 +10,8 @@
 
 #define MAX_ITEM	(30)
 #define MAX_LIFE	(5)
+#define ITEM_DROP_SPEED		(150.0f)
+#define LIFETIME_ITEM		(10.0f)
 
 enum ITEM_TYPE
 {
@@ -29,7 +31,11 @@ enum ITEM_TYPE
 class objItem : public bgObject
 {
 public:
+	ITEM_TYPE	m_ItemType;
 	bool	m_bLife;
+	float	m_fLifeTime;
+	float	m_fPosA; // X 증가값
+	float	m_fPosB; // Y 증가값
 
 public:
 	bool	Init();

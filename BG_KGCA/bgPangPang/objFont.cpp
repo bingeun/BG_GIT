@@ -6,7 +6,7 @@ void objFont::PrintNumber(int iNumber, int pX, int pY)
 {
 	int iMod, iFontWidth;
 
-	SetSprite(L"FontNumberSmall");
+	SetSprite(L"FontNumberBig");
 	iFontWidth = m_Sprite.m_iterFrame->rectSrc.right;
 	m_posObject.y = pY;
 	do
@@ -15,7 +15,7 @@ void objFont::PrintNumber(int iNumber, int pX, int pY)
 		iNumber /= 10;
 		pX -= iFontWidth;
 
-		SetSprite(L"FontNumberSmall");
+		SetSprite(L"FontNumberBig");
 		m_Sprite.m_iterFrame += iMod;
 
 		m_posObject.x = pX;
