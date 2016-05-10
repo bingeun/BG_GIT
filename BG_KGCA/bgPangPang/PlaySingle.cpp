@@ -103,8 +103,8 @@ int GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
 
 			// m_fPosA = X방향속도, m_fPosB = Y방향속도
 			// (부호 ? - : + ) 곱하기 (기본속도 + 랜덤속도);
-			m_Object[iEmpty].m_fPosA = ((rand() % 2) ? -1 : 1) * (OBJECT_SPEED + (rand() % 100));
-			m_Object[iEmpty].m_fPosB = -0.6f * (OBJECT_SPEED / OBJECT_SPEED);
+			m_Object[iEmpty].m_fPosA = ((rand() % 2) ? -1 : 1) * (OBJECT_SPEED*2.0f + (rand() % 100));
+			m_Object[iEmpty].m_fPosB = -0.4f * (OBJECT_SPEED / OBJECT_SPEED);
 
 			m_CountObject++;
 		}
@@ -628,14 +628,14 @@ void GameMain::FrameCollide()
 									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
 										(float)posBullet.x - (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 2),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
-									m_Object[iTemp].m_fPosA = -1.0f * abs(m_Object[iObject].m_fPosA);
-									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+									m_Object[iTemp].m_fPosA = -1.0f * abs(m_Object[iTemp].m_fPosA);
+									//m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
 										(float)posBullet.x + (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 2),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
-									m_Object[iTemp].m_fPosA = abs(m_Object[iObject].m_fPosA);
-									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+									m_Object[iTemp].m_fPosA = abs(m_Object[iTemp].m_fPosA);
+									//m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									m_iScore += 20;
 									m_Sound.Play(m_arySound[SOUND_BALL_DEVIDE], true);
@@ -723,13 +723,13 @@ void GameMain::FrameCollide()
 										(float)posBullet.x - (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 4),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
 									m_Object[iTemp].m_fPosA = -1.0f * abs(m_Object[iObject].m_fPosA);
-									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+									//m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
 										(float)posBullet.x + (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 4),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
 									m_Object[iTemp].m_fPosA = abs(m_Object[iObject].m_fPosA);
-									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+									//m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									m_iScore += 10;
 									m_Sound.Play(m_arySound[SOUND_BALL_DEVIDE], true);
@@ -1008,7 +1008,7 @@ bool GameMain::SingleFrame()
 	if (m_CountLife < 1)
 	{
 		// 화면 보여주는 시간...
-		if (g_fAccumulation - m_TimeDeath > 7.0f)
+		if (g_fAccumulation - m_TimeDeath > 6.5f)
 		{
 			m_GameState = STATE_MAIN;
 			m_Sound.Stop();
@@ -1079,11 +1079,11 @@ bool GameMain::SingleRender()
 	// 게임오버시
 	if (m_CountLife < 1)
 	{
-		// GAME OVER 그림 내려오며 종료되는 시간 7초
-		if (g_fAccumulation - m_TimeDeath <= 7.0f)
+		// GAME OVER 그림 내려오며 종료되는 시간 6.5초
+		if (g_fAccumulation - m_TimeDeath <= 6.5f)
 		{
 			float timeGameover = g_fAccumulation - m_TimeDeath;
-			m_Gameover.m_posObject.y = (int)(-140.0f + timeGameover*50.0f);
+			m_Gameover.m_posObject.y = (int)(-140.0f + timeGameover*55.0f);
 
 			m_Gameover.Render();
 			if (((int)(timeGameover*14.0f)) % 2)

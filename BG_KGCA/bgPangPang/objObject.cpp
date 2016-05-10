@@ -23,9 +23,9 @@ bool objObject::Frame()
 	{
 	case OBJECT_BALL:
 	{
-		m_fPosX += g_fSPF * m_fPosA;
+		m_fPosX += g_fSPF * m_fPosA * 0.5f;
 		m_fPosB += g_fSPF;
-		m_fPosY += m_fPosB; //BOARD_Y + (BOARD_H*BLOCK_H) / 2 + 100.0f;
+		m_fPosY += m_fPosB * 0.5f; //BOARD_Y + (BOARD_H*BLOCK_H) / 2 + 100.0f;
 		m_posObject.x = (int)m_fPosX;
 		m_posObject.y = (int)m_fPosY;
 

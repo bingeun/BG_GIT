@@ -152,6 +152,9 @@
   <ItemGroup>
     <ClCompile Include="bgServer1.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bgProtocol.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
