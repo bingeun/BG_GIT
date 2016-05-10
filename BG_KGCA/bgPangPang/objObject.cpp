@@ -39,7 +39,7 @@ bool objObject::Frame()
 		else if (m_posObject.x > BOARD_X + (BOARD_W*BLOCK_W) - iWidthObject)
 		{
 			m_posObject.x = BOARD_X + (BOARD_W*BLOCK_W) - iWidthObject - 1;
-			m_fPosA = -1.0f * abs(m_fPosA);
+			m_fPosA = -abs(m_fPosA);
 		}
 
 		// YÁÂÇ¥°¡ °ÔÀÓ Height¸¦ ¹þ¾î³ª¸é...
@@ -52,7 +52,7 @@ bool objObject::Frame()
 		else if (m_posObject.y > BOARD_Y + (BOARD_H*BLOCK_H) - iHeightObject)
 		{
 			m_posObject.y = BOARD_Y + (BOARD_H*BLOCK_H) - iHeightObject - 1;
-			m_fPosB = -1.0f * abs(m_fPosB);
+			m_fPosB = -abs(m_fPosB);
 		}
 	}
 	break;

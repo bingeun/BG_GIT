@@ -6,7 +6,7 @@
 #pragma comment(lib, "fmodex_vc.lib")
 using namespace FMOD;
 
-const int g_iMaxSound = 10;
+const int g_iMaxSound = 20;
 
 class bgSound
 {
@@ -14,6 +14,7 @@ public:
 	int m_iSoundList;
 	FMOD::System* m_pSystem;
 	FMOD::Sound* m_pSound[g_iMaxSound];
+
 	FMOD::Channel* m_pChannel[g_iMaxSound];
 	TCHAR m_szBuffer[MAX_PATH];
 

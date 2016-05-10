@@ -24,8 +24,8 @@
 #define GUN_BULLET_MAX			(30)
 #define DOUBLE_BULLET_MAX		(8)
 #define REGENTIME_BALL_FAST		(2.0f)
-#define REGENTIME_BALL			(8.0f)
-#define REGENTIME_POLYGON		(13.0f)
+#define REGENTIME_BALL			(11.0f)
+#define REGENTIME_POLYGON		(17.0f)
 #define REGENTIME_CLOCK			(33.0f)
 #define REGENTIME_BLOCK			(5.0f)
 #define REGENTIME_BULLET		(42.0f)
@@ -45,13 +45,17 @@ enum GAME_STATE
 enum GAME_SOUND
 {
 	SOUND_BGM_MAIN = 0,
+	SOUND_BGM_GAMEOVER,
 	SOUND_BGM_BACK1,
 	SOUND_BGM_BACK2,
 	SOUND_BGM_BACK3,
 	SOUND_BGM_BACK4,
 	SOUND_BALL_BURST,
 	SOUND_BALL_DEVIDE,
-	SOUND_ITEM_EAT,
+	SOUND_ITEM_BULLET,
+	SOUND_ITEM_CLOCK,
+	SOUND_ITEM_FOOD,
+	SOUND_ITEM_LIFE,
 	SOUND_LIFE_MINUS,
 	SOUND_DIE,
 	MAX_SOUND // 사운드 개수
@@ -115,7 +119,7 @@ public:
 	int			m_iScore;
 
 public:
-	void	CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize = 1);
+	int		CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize = 1);
 	void	CreateBullet(BULLET_TYPE iType, float fX, float fY);
 	void	CreateEffect(EFFECT_TYPE iType, float fX, float fY);
 	int		CreateItem(ITEM_TYPE iType, float fX, float fY);

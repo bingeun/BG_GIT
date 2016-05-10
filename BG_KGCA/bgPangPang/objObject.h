@@ -3,8 +3,8 @@
 #include "bgSys.h"
 #include "bgObject.h"
 
-#define OBJECT_SPEED (50.0f)
 #define MAX_OBJECT (256)
+#define OBJECT_SPEED (60.0f)
 
 enum OBJECT_TYPE
 {

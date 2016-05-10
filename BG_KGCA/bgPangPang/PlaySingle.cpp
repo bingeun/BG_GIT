@@ -59,15 +59,16 @@ int GameMain::CreateItem(ITEM_TYPE iType, float fX, float fY)
 	return iEmpty;
 }
 
-void GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
+int GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
 {
+	int iEmpty = 0;
+
 	switch (iType)
 	{
 	case OBJECT_BALL:
 		if (m_CountObject < MAX_OBJECT)
 		{
 			// 비어있는 오브젝트(볼, 다각형, 블록) 배열위치 찾기
-			int iEmpty;
 			for (iEmpty = 0; iEmpty < MAX_OBJECT; iEmpty++)
 			{
 				if (!m_Object[iEmpty].m_bLife)
@@ -103,7 +104,7 @@ void GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
 			// m_fPosA = X방향속도, m_fPosB = Y방향속도
 			// (부호 ? - : + ) 곱하기 (기본속도 + 랜덤속도);
 			m_Object[iEmpty].m_fPosA = ((rand() % 2) ? -1 : 1) * (OBJECT_SPEED + (rand() % 100));
-			m_Object[iEmpty].m_fPosB = -0.5f * (OBJECT_SPEED / OBJECT_SPEED);
+			m_Object[iEmpty].m_fPosB = -0.6f * (OBJECT_SPEED / OBJECT_SPEED);
 
 			m_CountObject++;
 		}
@@ -158,6 +159,7 @@ void GameMain::CreateObject(OBJECT_TYPE iType, float fX, float fY, int iSize)
 	case OBJECT_BLOCK:
 		break;
 	}
+	return iEmpty;
 }
 
 void GameMain::CreateBullet(BULLET_TYPE iType, float fX, float fY)
@@ -576,7 +578,7 @@ void GameMain::FrameTimer()
 	if (m_iScore - m_iCountScore >= LIFEBONUS_SCORE)
 	{
 		int iPosXRand = rand() % (CLIENT_W - 300) + 100;
-		int iItem = CreateItem(ITEM_LIFE, iPosXRand, BOARD_Y);
+		int iItem = CreateItem(ITEM_LIFE, (float)iPosXRand, (float)BOARD_Y);
 		m_Item[iItem].m_fPosB = ITEM_DROP_SPEED;
 		m_iCountScore = m_iScore;
 	}
@@ -619,14 +621,21 @@ void GameMain::FrameCollide()
 							// 작살류(단일,이중,고정)가 볼이나 다각형에 충돌했을 경우
 							if (m_Collision.SphereInVLine(sphObject, posBullet, BOARD_Y + BOARD_H*BLOCK_H))
 							{
+								// 두 개로 쪼개짐
 								if (m_Object[iObject].m_iObjectSize > 1)
 								{
-									CreateObject(m_Object[iObject].m_ObjectType,
-										m_Object[iObject].m_fPosX - (m_Object[iObject].m_iObjectSize * m_Object[iObject].m_iObjectSize),
+									int iTemp;
+									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
+										(float)posBullet.x - (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 2),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
-									CreateObject(m_Object[iObject].m_ObjectType,
-										m_Object[iObject].m_fPosX + (m_Object[iObject].m_iObjectSize * m_Object[iObject].m_iObjectSize),
+									m_Object[iTemp].m_fPosA = -1.0f * abs(m_Object[iObject].m_fPosA);
+									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+
+									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
+										(float)posBullet.x + (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 2),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
+									m_Object[iTemp].m_fPosA = abs(m_Object[iObject].m_fPosA);
+									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									m_iScore += 20;
 									m_Sound.Play(m_arySound[SOUND_BALL_DEVIDE], true);
@@ -706,14 +715,21 @@ void GameMain::FrameCollide()
 							// 총알이 볼이나 다각형에 충돌했을 경우
 							if (m_Collision.SphereInPoint(sphObject, posBullet))
 							{
+								// 두 개로 쪼개짐
 								if (m_Object[iObject].m_iObjectSize > 1)
 								{
-									CreateObject(m_Object[iObject].m_ObjectType,
-										m_Object[iObject].m_fPosX - (m_Object[iObject].m_iObjectSize * m_Object[iObject].m_iObjectSize * 5),
+									int iTemp;
+									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
+										(float)posBullet.x - (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 4),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
-									CreateObject(m_Object[iObject].m_ObjectType,
-										m_Object[iObject].m_fPosX + (m_Object[iObject].m_iObjectSize * m_Object[iObject].m_iObjectSize * 5),
+									m_Object[iTemp].m_fPosA = -1.0f * abs(m_Object[iObject].m_fPosA);
+									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
+
+									iTemp = CreateObject(m_Object[iObject].m_ObjectType,
+										(float)posBullet.x + (m_Object[iObject].m_Sprite.m_iterFrame->rectSrc.right / 4),
 										m_Object[iObject].m_fPosY, m_Object[iObject].m_iObjectSize - 1);
+									m_Object[iTemp].m_fPosA = abs(m_Object[iObject].m_fPosA);
+									m_Object[iTemp].m_fPosB = -1.0f * abs(m_Object[iObject].m_fPosB);
 
 									m_iScore += 10;
 									m_Sound.Play(m_arySound[SOUND_BALL_DEVIDE], true);
@@ -803,31 +819,37 @@ void GameMain::FrameCollide()
 					m_iScore += 1000; // 누적 2000
 				case ITEM_FOOD1:
 					m_iScore += 1000; // 누적 1000
+					m_Sound.Play(m_arySound[SOUND_ITEM_FOOD], true);
 					break;
 
 					// 무기 아이템 - 무기 변경
 				case ITEM_WEAPON_SINGLE:
+					m_Sound.Play(m_arySound[SOUND_ITEM_BULLET], true);
 					m_BulletType = BULLET_SINGLE;
 					break;
 				case ITEM_WEAPON_DOUBLE:
+					m_Sound.Play(m_arySound[SOUND_ITEM_BULLET], true);
 					m_BulletType = BULLET_DOUBLE;
 					break;
 				case ITEM_WEAPON_FIXED:
+					m_Sound.Play(m_arySound[SOUND_ITEM_BULLET], true);
 					m_BulletType = BULLET_FIXED;
 					break;
 				case ITEM_WEAPON_GUN:
+					m_Sound.Play(m_arySound[SOUND_ITEM_BULLET], true);
 					m_BulletType = BULLET_GUN;
 					break;
 
-					// 기타 아이템
+						// 기타 아이템
 				case ITEM_LIFE: // 생명 증가
 					if (m_CountLife < MAX_LIFE)
 					{
-						m_Sound.Play(m_arySound[SOUND_ITEM_EAT], true);
+						m_Sound.Play(m_arySound[SOUND_ITEM_LIFE], true);
 						m_CountLife++;
 					}
 					break;
 				case ITEM_CLOCK: // 일시 멈춤
+					m_Sound.Play(m_arySound[SOUND_ITEM_CLOCK], true);
 					m_TimeClockAdd = g_fAccumulation;
 					break;
 				case ITEM_SHIELD: // 보호막
@@ -897,6 +919,8 @@ void GameMain::FrameCollide()
 						else
 							m_Hero.SetSprite(L"HeroDieRight");
 
+						m_Sound.Stop();
+						m_Sound.Play(m_arySound[SOUND_BGM_GAMEOVER], true);
 						m_Sound.Play(m_arySound[SOUND_DIE], true);
 					}
 					else

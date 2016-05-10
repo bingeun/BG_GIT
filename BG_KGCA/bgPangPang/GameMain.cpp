@@ -9,13 +9,17 @@ bool GameMain::Init()
 
 	m_Sound.Init();
 	m_arySound[SOUND_BGM_MAIN]		= m_Sound.Load("../../data/bgPangPang/bgm_main.mp3", false);
+	m_arySound[SOUND_BGM_GAMEOVER]	= m_Sound.Load("../../data/bgPangPang/bgm_gameover.wav", false);
 	m_arySound[SOUND_BGM_BACK1]		= m_Sound.Load("../../data/bgPangPang/bgm_back1.mid", false);
 	m_arySound[SOUND_BGM_BACK2]		= m_Sound.Load("../../data/bgPangPang/bgm_back2.mid", false);
 	m_arySound[SOUND_BGM_BACK3]		= m_Sound.Load("../../data/bgPangPang/bgm_back3.mid", false);
 	m_arySound[SOUND_BGM_BACK4]		= m_Sound.Load("../../data/bgPangPang/bgm_back4.mid", false);
 	m_arySound[SOUND_BALL_BURST]	= m_Sound.Load("../../data/bgPangPang/ball_burst.wav", false);
 	m_arySound[SOUND_BALL_DEVIDE]	= m_Sound.Load("../../data/bgPangPang/ball_devide.wav", false);
-	m_arySound[SOUND_ITEM_EAT]		= m_Sound.Load("../../data/bgPangPang/item_eat.wav", false);
+	m_arySound[SOUND_ITEM_BULLET]	= m_Sound.Load("../../data/bgPangPang/item_bullet.wav", false);
+	m_arySound[SOUND_ITEM_CLOCK]	= m_Sound.Load("../../data/bgPangPang/item_clock.wav", false);
+	m_arySound[SOUND_ITEM_FOOD]		= m_Sound.Load("../../data/bgPangPang/item_food.wav", false);
+	m_arySound[SOUND_ITEM_LIFE]		= m_Sound.Load("../../data/bgPangPang/item_life.wav", false);
 	m_arySound[SOUND_LIFE_MINUS]	= m_Sound.Load("../../data/bgPangPang/life_minus.wav", false);
 	m_arySound[SOUND_DIE]			= m_Sound.Load("../../data/bgPangPang/die.wav", false);
 
