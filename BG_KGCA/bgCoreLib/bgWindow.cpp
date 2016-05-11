@@ -48,9 +48,9 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_HREDRAW | CS_VREDRAW;
 	wc.hInstance = hInstance;
-	wc.hIcon = LoadIcon(NULL, IDI_QUESTION);
-	wc.hIconSm = LoadIcon(NULL, IDI_WARNING);
-	wc.hCursor = LoadCursor(NULL, IDC_CROSS);
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
 	wc.hbrBackground = (HBRUSH)GetStockObject(LTGRAY_BRUSH);
 	wc.cbClsExtra = 0; // 윈도우 클래스에서 사용하려는 여분의 메모리 크기
 	wc.cbWndExtra = 0; // 윈도우에서 사용하려는 여분의 메모리 크기
@@ -67,7 +67,7 @@ bool bgWindow::SetWindow(HINSTANCE hInstance, TCHAR* titleName, int iX, int iY, 
 
 	// 2. 등록된 객체 사용하여 윈도우 생성
 	m_hWnd = CreateWindowEx( // WS_EX_APPWINDOW 기본, WS_EX_TOPMOST 항상 위에
-		WS_EX_APPWINDOW, L"BG", L"BG First!", WS_OVERLAPPEDWINDOW, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
+		WS_EX_APPWINDOW, L"BG", L"BG Games!", WS_OVERLAPPED, // WS_OVERLAPPEDWINDOW, WS_POPUPWINDOW, WS_OVERLAPPED
 		iX, iY, rt.right - rt.left, rt.bottom - rt.top, NULL, NULL, hInstance, NULL);
 
 	// 3. 윈도우 보이기
@@ -127,8 +127,8 @@ void bgWindow::CenterWindow()
 	int iScreenHeight = GetSystemMetrics(SM_CYSCREEN);
 	int x = (iScreenWidth - (m_rtWindow.right - m_rtWindow.left)) / 2;
 	int y = (iScreenHeight - (m_rtWindow.bottom - m_rtWindow.top)) / 2;
-	int w = m_rtWindow.right - m_rtWindow.left;
-	int h = m_rtWindow.bottom - m_rtWindow.top;
+	int w = m_rtWindow.right - m_rtWindow.left - GetSystemMetrics(SM_CXBORDER);
+	int h = m_rtWindow.bottom - m_rtWindow.top - GetSystemMetrics(SM_CYBORDER);
 
 	MoveWindow(m_hWnd, x, y, w, h, true);
 }
