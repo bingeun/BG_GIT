@@ -384,20 +384,20 @@ void GameMain::FrameKey()
 	{
 		CreateBullet(m_BulletType, (float)m_Hero.m_posObject.x, (float)m_Hero.m_posObject.y);
 	}
-	// 무기 발사2 - 테스트용
+	// 무기 발사(자동) - 테스트용
 	if (m_Input.KeyCheck('Z') == KEY_HOLD) // VK_LCONTROL
 	{
 		CreateBullet(m_BulletType, (float)m_Hero.m_posObject.x, (float)m_Hero.m_posObject.y);
 	}
 
 	// Up - 이동속도 증가
-	if (m_Input.KeyCheck('Q') == KEY_HOLD)
+	if (m_Input.KeyCheck(VK_UP) == KEY_HOLD)
 	{
 		m_Hero.SpeedUp();
 	}
 
 	// Down - 이동속도 감소
-	if (m_Input.KeyCheck('A') == KEY_HOLD)
+	if (m_Input.KeyCheck(VK_DOWN) == KEY_HOLD)
 	{
 		m_Hero.SpeedDown();
 	}
@@ -420,22 +420,14 @@ void GameMain::FrameKey()
 		m_BulletType = BULLET_GUN;
 	}
 
-	// F5 - 볼 리젠 빠르게
+	// F5 - 볼 리젠 빠르게, 무기 동시발사 가능개수 증가
 	if (m_Input.KeyCheck(VK_F5) == KEY_PUSH)
 	{
+		m_iDoubleBullet = DOUBLE_BULLET_MAX;
+		m_iGunBullet = GUN_BULLET_MAX;
 		m_fRegenBall = REGENTIME_BALL_FAST;
 	}
-	// F6 - 작살 동시발사 가능개수 증가
-	if (m_Input.KeyCheck(VK_F6) == KEY_PUSH)
-	{
-		m_iDoubleBullet = DOUBLE_BULLET_MAX;
-	}
-	// F8 - 총알 동시발사 가능개수 증가
-	if (m_Input.KeyCheck(VK_F8) == KEY_PUSH)
-	{
-		m_iGunBullet = GUN_BULLET_MAX;
-	}
-	// F9 - 볼 리젠, 무기 동시발사 가능개수 원래대로
+	// F6 - 볼 리젠, 무기 동시발사 가능개수 원래대로
 	if (m_Input.KeyCheck(VK_F9) == KEY_PUSH)
 	{
 		m_iDoubleBullet = DEFAULT_DOUBLE_BULLET;
@@ -1079,11 +1071,21 @@ bool GameMain::SingleRender()
 	// 게임오버시
 	if (m_CountLife < 1)
 	{
-		// GAME OVER 그림 내려오며 종료되는 시간 6.5초
-		if (g_fAccumulation - m_TimeDeath <= 6.5f)
+		// GAME OVER 그림 내려오며 종료되는 시간 3.0초
+		if (g_fAccumulation - m_TimeDeath <= 3.0f)
 		{
 			float timeGameover = g_fAccumulation - m_TimeDeath;
-			m_Gameover.m_posObject.y = (int)(-140.0f + timeGameover*55.0f);
+			m_Gameover.m_posObject.y = (int)(-140.0f + timeGameover*115.0f);
+
+			m_Gameover.Render();
+			if (((int)(timeGameover*14.0f)) % 2)
+				m_Hero.Render();
+		}
+		// GAME OVER 그림 고정된 후(3.0초~) 끝나기까지의 시간 ~6.5초
+		else if (g_fAccumulation - m_TimeDeath <= 6.5f)
+		{
+			float timeGameover = g_fAccumulation - m_TimeDeath;
+			m_Gameover.m_posObject.y = 200;
 
 			m_Gameover.Render();
 			if (((int)(timeGameover*14.0f)) % 2)

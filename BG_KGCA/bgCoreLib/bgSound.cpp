@@ -83,10 +83,11 @@ void bgSound::SetLoop(int iIndex)
 
 void bgSound::Release()
 {
-	for (int iSound = 0; iSound < g_iMaxSound; iSound++)
+	for (int iSound = 0; iSound < m_iSoundList; iSound++)
 	{
 		m_pSound[iSound]->release();
 	}
+	m_iSoundList = 0;
 	m_pSystem->close();
 	m_pSystem->release();
 }
@@ -98,4 +99,5 @@ bgSound::bgSound()
 
 bgSound::~bgSound()
 {
+	Release();
 }

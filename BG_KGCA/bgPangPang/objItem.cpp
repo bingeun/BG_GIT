@@ -20,7 +20,7 @@ bool objItem::Init()
 
 bool objItem::Frame()
 {
-//	bgObject::Frame();
+	bgObject::Frame();
 	m_fPosX += g_fSPF * m_fPosA;
 	m_fPosY += g_fSPF * m_fPosB;
 	if ((int)m_fPosY > BOARD_Y + BOARD_H*BLOCK_H - ITEM_H)
