@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="GamePlay">
+      <UniqueIdentifier>{2a396c90-d353-4df2-a87b-5792b7417bdd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{6b348876-70f0-438c-91ab-014383c04b76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Network">
+      <UniqueIdentifier>{2dfc0b7f-9cfe-4bcf-be95-3ab5331bdcc7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GameMain.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayMain.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySingle.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayNetwork.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="objBack.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+    <ClCompile Include="bgNetris.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayNetworkServer.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayNetworkClient.cpp">
+      <Filter>GamePlay</Filter>
+    </ClCompile>
+    <ClCompile Include="bgGameServer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgGameUser.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgGameAccept.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgGamePacketPool.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgUdpSocketSvr.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgUdpSocketClnt.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgClient.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="objUI.cpp">
+      <Filter>Object</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Tetromino.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMain.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="objBack.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+    <ClInclude Include="bgNetris.h">
+      <Filter>GamePlay</Filter>
+    </ClInclude>
+    <ClInclude Include="bgGameUser.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgGameServer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgGameAccept.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgGamePacketPool.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgProtocolGame.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgUdpSocketSvr.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgUdpSocketClnt.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgClient.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="objUI.h">
+      <Filter>Object</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

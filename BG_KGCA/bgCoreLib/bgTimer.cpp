@@ -48,8 +48,8 @@ bool bgTimer::Render()
 		_stprintf_s(m_csBuffer, L"FPS [%4d] SPF [%.4f] ACC [%.4f]", m_iFPS, m_fSPF, m_fAccumulation);
 		fTime = 0.0f;
 	}
-	SetBkMode(g_hOffScreenDC, TRANSPARENT); // 배경 투명하게
-	TextOut(g_hOffScreenDC, 2, 2, m_csBuffer, _tcslen(m_csBuffer));
+	//SetBkMode(g_hOffScreenDC, TRANSPARENT); // 배경 투명하게
+	//TextOut(g_hOffScreenDC, 2, 2, m_csBuffer, _tcslen(m_csBuffer));
 #endif // _DEBUG
 	return true;
 }

@@ -1,8 +1,7 @@
 #include "bgWindow.h"
 
-bgWindow*	g_pWindow;
-
 // 윈도우 관련 전역변수
+bgWindow*	g_pWindow;
 HWND		g_hWnd;
 HINSTANCE	g_hInstance;
 RECT		g_rtWindow;
@@ -11,6 +10,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
+	case WM_CREATE:
+	{
+		g_pWindow->m_bActivate = true;
+	}
+	break;
+
+	case WM_ACTIVATEAPP:
+	{
+		if (wParam == TRUE)
+			g_pWindow->m_bActivate = true;
+		if (wParam == FALSE)
+			g_pWindow->m_bActivate = false;
+	}
+	break;
+
 	case WM_DESTROY:
 	{
 		PostQuitMessage(0); // 메세지 큐 제일 뒤에 WM_QUIT 를 추가

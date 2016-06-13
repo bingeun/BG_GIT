@@ -133,10 +133,10 @@ GameMain::~GameMain()
 {
 }
 
-int WINAPI wWinMain(HINSTANCE hInstatnce, HINSTANCE hPrevInstatnce, LPWSTR lpCmdLine, int nCmdShow)
+int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstatnce, LPWSTR lpCmdLine, int nCmdShow)
 {
 	GameMain win;
-	if (win.SetWindow(hInstatnce) == true)
+	if (win.SetWindow(hInstance) == true)
 	{
 		win.CenterWindow();
 		win.Run();

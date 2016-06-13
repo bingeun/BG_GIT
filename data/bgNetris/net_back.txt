@@ -1,0 +1,3 @@
+#SPRITE	1	../../data/bgNetris/net_back.bmp	NULL_MASK
+NetBack		1	0
+0	100.0	0	0	0	0	1024	768

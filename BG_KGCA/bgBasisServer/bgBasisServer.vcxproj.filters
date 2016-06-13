@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Network">
+      <UniqueIdentifier>{714055c6-0b61-4aee-a466-7fc60984caa2}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="bgProtocol.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgServerStd.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgPacket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgServerObj.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgSynchronize.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgThread.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgStreamPacket.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgUser.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgPacketPool.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgDebugString.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgWorkThread.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgAcceptor.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgServer.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+    <ClInclude Include="bgServerIOCP.h">
+      <Filter>Network</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="bgPacket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgServerObj.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgSynchronize.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgThread.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgStreamPacket.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgUser.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgPacketPool.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgDebugString.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgAcceptor.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgServer.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgServerIOCP.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+    <ClCompile Include="bgWorkThread.cpp">
+      <Filter>Network</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

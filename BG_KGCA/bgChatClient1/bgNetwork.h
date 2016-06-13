@@ -1,4 +1,5 @@
 #pragma once
+#define _WINSOCK_DEPRECATED_NO_WARNINGS
 #include "bgStd.h"
 #include "bgSys.h"
 #include "bgProtocol.h"
@@ -8,7 +9,7 @@ class bgNetwork
 public:
 	SOCKET	m_Sock;
 	bool	m_bConnect;
-	char	m_szRecvBuffer[2048];
+	char	m_szRecvBuffer[MAX_MESSAGE];
 	int		m_iRecvByte;
 	int		m_iStartByte;
 

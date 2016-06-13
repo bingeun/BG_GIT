@@ -6,7 +6,7 @@
 #pragma comment(lib, "fmodex_vc.lib")
 using namespace FMOD;
 
-const int g_iMaxSound = 20;
+const int g_iMaxSound = 34;
 
 class bgSound
 {

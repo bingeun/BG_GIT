@@ -11,6 +11,7 @@ public:
 	RECT		m_rtClient;
 	int			m_iWidth;
 	int			m_iHeight;
+	bool		m_bActivate;
 
 public:
 	bool	SetWindow(HINSTANCE hInstance, TCHAR* titleName = L"BG Project", int iX = 0, int iY = 0, int iWidth = 800, int iHeight = 600);

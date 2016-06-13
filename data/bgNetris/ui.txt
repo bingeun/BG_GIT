@@ -1,0 +1,5 @@
+#SPRITE	2	../../data/bgNetris/ui.bmp	NULL_MASK
+UIServer	1	0
+0	100.0	0	0	0	0	320	60
+UIClient	1	0
+0	100.0	0	0	0	60	320	60

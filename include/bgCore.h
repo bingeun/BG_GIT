@@ -9,15 +9,6 @@ public:
 	bgTimer		m_Timer;
 	bgInput		m_Input;
 
-	HDC			m_hScreenDC;
-	HDC			m_hOffScreenDC;
-	HBITMAP		m_hScreenBitmap;
-	HBITMAP		m_hOffScreenBitmap;
-	HBRUSH		m_hBrush;
-	HBRUSH		m_hOldBrush;
-	HFONT		m_hFont;
-	HFONT		m_hOldFont;
-
 public:
 	bool	GameRun();
 	bool	GameInit();
@@ -34,8 +25,6 @@ public:
 
 	virtual bool	PreFrame() { return true; }
 	virtual bool	PostFrame() { return true; }
-	virtual bool	PreRender();
-	virtual bool	PostRender();
 
 	virtual bool	DrawDebug();
 	virtual bool	DrawDebug(TCHAR* pString, int iX, int iY);
