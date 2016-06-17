@@ -10,6 +10,7 @@
 #include <string>
 #include <algorithm>
 #include <functional>
+#include "bgBase.h"
 
 using namespace std;
 #pragma comment( lib, "ws2_32.lib")

@@ -85,6 +85,9 @@
     <ClInclude Include="bgSprite.h">
       <Filter>Shape</Filter>
     </ClInclude>
+    <ClInclude Include="bgDevice.h">
+      <Filter>Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bgBase.cpp">
@@ -128,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="bgSprite.cpp">
       <Filter>Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="bgDevice.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

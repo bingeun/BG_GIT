@@ -157,7 +157,7 @@
     <ClCompile Include="bgDX01.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="fx1.fx">
+    <FxCompile Include="fx01.fx">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </FxCompile>
   </ItemGroup>

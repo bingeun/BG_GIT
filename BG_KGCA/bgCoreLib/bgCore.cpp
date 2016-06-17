@@ -50,9 +50,13 @@ bool bgCore::GameFrame()
 
 bool bgCore::GameRender()
 {
-	Render();
+	PreRender();
+	{ // 傈贸府
+		Render();
 	m_Timer.Render();
 	m_Input.Render();
+	} // 饶贸府
+	PostRender();
 	return true;
 }
 

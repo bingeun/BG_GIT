@@ -1,9 +1,9 @@
 #pragma once
 #include "bgTimer.h"
 #include "bgInput.h"
-#include "bgWindow.h"
+#include "bgDevice.h"
 
-class bgCore : public bgWindow
+class bgCore : public bgDevice
 {
 public:
 	bgTimer		m_Timer;
@@ -25,6 +25,8 @@ public:
 
 	virtual bool	PreFrame() { return true; }
 	virtual bool	PostFrame() { return true; }
+	virtual bool	PreRender() { return true; }
+	virtual bool	PostRender() { return true; }
 
 	virtual bool	DrawDebug();
 	virtual bool	DrawDebug(TCHAR* pString, int iX, int iY);
